@@ -21,4 +21,24 @@ character-clothing-v01.json
 
 ## 当前实验
 
-暂无。
+```text
+01_WAI_人物锁定换装-v02.json
+说明： 方案一防分层，三套 Mask + Composite
+对应： experiments/2026-08-15/EXP-001.md
+
+01_WAI_人物锁定换装-v03.json
+说明： 在 v2 成品后串 A/B/C 定点修复
+对应： experiments/2026-08-15/EXP-002.md
+
+WAI_Universal_Inpaint_v1.json
+说明： Crop + Fooocus 单次换装主干
+对应： experiments/2026-08-15/EXP-003.md
+
+WAI_AutoClothes_Inpaint_v1-phase1.json
+说明： 上述主干 + 独立服装 Mask + 去衣 Prompt
+对应： experiments/2026-08-15/EXP-004.md
+
+WAI_AutoClothes_Inpaint_v1-phase2.json
+说明： Segformer 自动认衣替换手工 Mask
+对应： experiments/2026-08-15/EXP-005.md
+```

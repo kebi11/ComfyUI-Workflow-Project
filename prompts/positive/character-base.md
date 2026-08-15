@@ -1,14 +1,15 @@
 # character-base
 
-状态：草稿，未随 Baseline 验证。
+状态：已写入方案一「正向-固定人物」，未实测。
 
-用途：锁定人物主体描述。换装、换姿势时，这一段尽量保持不动。
+用途：锁定人物主体描述。换装时这一段不要改。
 
 ```text
-1girl, solo, same character, consistent face, consistent identity,
-detailed facial features, natural skin texture, consistent skin tone,
-consistent hairstyle, consistent hair color,
-consistent body proportions, slim waist, natural anatomy
+masterpiece, best quality, amazing quality, newest, very aesthetic, absurdres,
+1girl, adult woman, same person, same face,
+long black hair, bangs, blue eyes, pale skin,
+tall slender body, long legs, slim waist,
+consistent hairstyle, consistent hair color, consistent skin tone, consistent body proportions
 ```
 
 ## 使用说明

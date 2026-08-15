@@ -1,0 +1,1309 @@
+{
+  "id": "wai-universal-inpaint-v1",
+  "revision": 0,
+  "last_node_id": 20,
+  "last_link_id": 28,
+  "nodes": [
+    {
+      "id": 20,
+      "type": "Note",
+      "pos": [
+        20,
+        -280
+      ],
+      "size": [
+        900,
+        250
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "WAI Universal Inpaint v1",
+      "properties": {
+        "Node name for S&R": "Note"
+      },
+      "widgets_values": [
+        "新主线：Crop & Stitch（lquesada 原仓库）+ Fooocus Inpaint（Acly）。\nMask 外不进 VAE。不要再叠第二遍整衣 / Seam / Composite。\n\n1. 底图右键画一张服装 Mask：旧衣服+透明纱+新衣服要占的位置。\n   不要涂脸、头发主体、无关手脚、大背景。黑底亮白，不要开负面。\n2. 只改绿色「正向-新服装」。\n3. 真换装 denoise 用 0.90 / 0.95 / 1.00。还有旧纱先加大手绘 Mask，再加 denoise。\n4. Color Match 默认 strength=0（关闭）。Crop 内外色偏再改成 1.0。\n5. Crop 默认 CPU，OOM 把 target 1024 改成 896。"
+      ],
+      "color": "#432",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 1,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        20,
+        20
+      ],
+      "size": [
+        390,
+        98
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "Checkpoint名称",
+          "name": "ckpt_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "ckpt_name"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ]
+        },
+        {
+          "localized_name": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            2,
+            3
+          ]
+        },
+        {
+          "localized_name": "VAE",
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            4,
+            5
+          ]
+        }
+      ],
+      "title": "WAI Illustrious v1.7",
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "waiIllustriousSDXL_v170.safetensors"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "LoadImage",
+      "pos": [
+        20,
+        160
+      ],
+      "size": [
+        390,
+        340
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "image"
+          }
+        },
+        {
+          "localized_name": "选择文件上传",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "link": null,
+          "widget": {
+            "name": "upload"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            6
+          ]
+        },
+        {
+          "localized_name": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            7
+          ]
+        }
+      ],
+      "title": "底图-右键画服装Mask",
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "顾.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "CLIPTextEncode",
+      "pos": [
+        450,
+        20
+      ],
+      "size": [
+        430,
+        200
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 2
+        },
+        {
+          "localized_name": "文本",
+          "name": "text",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            8
+          ]
+        }
+      ],
+      "title": "正向-新服装【每次只改这里】",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "masterpiece, best quality, amazing quality,\nwhite sleeveless blouse,\nhigh-waisted opaque black pleated skirt,\nclean garment silhouette, natural clothing folds,\nnatural clothing-body contact, soft contact shadows, consistent lighting"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 4,
+      "type": "CLIPTextEncode",
+      "pos": [
+        450,
+        250
+      ],
+      "size": [
+        430,
+        160
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 3
+        },
+        {
+          "localized_name": "文本",
+          "name": "text",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            9
+          ]
+        }
+      ],
+      "title": "负向",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "bad quality, worst quality, worst detail,\ndouble clothing, ghost fabric, floating fabric, blurry hemline"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "InpaintCropImproved",
+      "pos": [
+        450,
+        450
+      ],
+      "size": [
+        400,
+        620
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 6
+        },
+        {
+          "localized_name": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "link": 7,
+          "shape": 7
+        },
+        {
+          "localized_name": "optional_context_mask",
+          "name": "optional_context_mask",
+          "type": "MASK",
+          "link": null,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "stitcher",
+          "name": "stitcher",
+          "type": "STITCHER",
+          "links": [
+            10
+          ]
+        },
+        {
+          "localized_name": "cropped_image",
+          "name": "cropped_image",
+          "type": "IMAGE",
+          "links": [
+            11,
+            12,
+            13
+          ]
+        },
+        {
+          "localized_name": "cropped_mask",
+          "name": "cropped_mask",
+          "type": "MASK",
+          "links": [
+            14,
+            15,
+            16
+          ]
+        }
+      ],
+      "title": "✂ Inpaint Crop 1024 CPU",
+      "properties": {
+        "Node name for S&R": "InpaintCropImproved",
+        "cnr_id": "comfyui-inpaint-cropandstitch"
+      },
+      "widgets_values": [
+        "bilinear",
+        "bicubic",
+        false,
+        "ensure minimum resolution",
+        1024,
+        1024,
+        16384,
+        16384,
+        true,
+        14,
+        false,
+        16,
+        0.1,
+        false,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.8,
+        true,
+        1024,
+        1024,
+        "32",
+        "cpu (compatible)"
+      ]
+    },
+    {
+      "id": 6,
+      "type": "INPAINT_LoadFooocusInpaint",
+      "pos": [
+        920,
+        20
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "head",
+          "name": "head",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "head"
+          }
+        },
+        {
+          "localized_name": "patch",
+          "name": "patch",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "patch"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "INPAINT_PATCH",
+          "name": "INPAINT_PATCH",
+          "type": "INPAINT_PATCH",
+          "links": [
+            17
+          ]
+        }
+      ],
+      "title": "Load Fooocus Inpaint v26",
+      "properties": {
+        "Node name for S&R": "INPAINT_LoadFooocusInpaint"
+      },
+      "widgets_values": [
+        "fooocus_inpaint_head.pth",
+        "inpaint_v26.fooocus.patch"
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 7,
+      "type": "INPAINT_VAEEncodeInpaintConditioning",
+      "pos": [
+        920,
+        140
+      ],
+      "size": [
+        320,
+        120
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "positive",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 8
+        },
+        {
+          "localized_name": "negative",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 9
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 4
+        },
+        {
+          "localized_name": "pixels",
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 11
+        },
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "positive",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            18
+          ]
+        },
+        {
+          "localized_name": "negative",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            19
+          ]
+        },
+        {
+          "localized_name": "latent_inpaint",
+          "name": "latent_inpaint",
+          "type": "LATENT",
+          "links": [
+            20
+          ]
+        },
+        {
+          "localized_name": "latent_samples",
+          "name": "latent_samples",
+          "type": "LATENT",
+          "links": [
+            21
+          ]
+        }
+      ],
+      "title": "VAE Encode & Inpaint Conditioning",
+      "properties": {
+        "Node name for S&R": "INPAINT_VAEEncodeInpaintConditioning"
+      },
+      "widgets_values": [],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 8,
+      "type": "INPAINT_ApplyFooocusInpaint",
+      "pos": [
+        920,
+        300
+      ],
+      "size": [
+        280,
+        70
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        },
+        {
+          "localized_name": "patch",
+          "name": "patch",
+          "type": "INPAINT_PATCH",
+          "link": 17
+        },
+        {
+          "localized_name": "latent",
+          "name": "latent",
+          "type": "LATENT",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            22
+          ]
+        }
+      ],
+      "title": "Apply Fooocus Inpaint",
+      "properties": {
+        "Node name for S&R": "INPAINT_ApplyFooocusInpaint"
+      },
+      "widgets_values": [],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 9,
+      "type": "KSampler",
+      "pos": [
+        1280,
+        20
+      ],
+      "size": [
+        310,
+        262
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 22
+        },
+        {
+          "localized_name": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 18
+        },
+        {
+          "localized_name": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 19
+        },
+        {
+          "localized_name": "Latent图像",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 21
+        },
+        {
+          "localized_name": "种子",
+          "name": "seed",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "seed"
+          }
+        },
+        {
+          "localized_name": "步数",
+          "name": "steps",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "steps"
+          }
+        },
+        {
+          "localized_name": "cfg",
+          "name": "cfg",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "cfg"
+          }
+        },
+        {
+          "localized_name": "采样器名称",
+          "name": "sampler_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "sampler_name"
+          }
+        },
+        {
+          "localized_name": "调度器",
+          "name": "scheduler",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "scheduler"
+          }
+        },
+        {
+          "localized_name": "降噪",
+          "name": "denoise",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "denoise"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            23
+          ]
+        }
+      ],
+      "title": "KSampler 换装 0.95",
+      "properties": {
+        "Node name for S&R": "KSampler",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        114514,
+        "fixed",
+        24,
+        5.0,
+        "euler_ancestral",
+        "normal",
+        0.95
+      ]
+    },
+    {
+      "id": 10,
+      "type": "VAEDecode",
+      "pos": [
+        1280,
+        320
+      ],
+      "size": [
+        220,
+        46
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "Latent",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 23
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            24
+          ]
+        }
+      ],
+      "title": "VAEDecode 裁切区",
+      "properties": {
+        "Node name for S&R": "VAEDecode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 11,
+      "type": "INPAINT_ColorMatch",
+      "pos": [
+        1280,
+        400
+      ],
+      "size": [
+        280,
+        100
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "target",
+          "name": "target",
+          "type": "IMAGE",
+          "link": 24
+        },
+        {
+          "localized_name": "reference",
+          "name": "reference",
+          "type": "IMAGE",
+          "link": 12
+        },
+        {
+          "localized_name": "exclude_mask",
+          "name": "exclude_mask",
+          "type": "MASK",
+          "link": 15
+        },
+        {
+          "localized_name": "strength",
+          "name": "strength",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "strength"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "image",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            25
+          ]
+        }
+      ],
+      "title": "Color Match（默认关 strength=0）",
+      "properties": {
+        "Node name for S&R": "INPAINT_ColorMatch"
+      },
+      "widgets_values": [
+        0.0
+      ]
+    },
+    {
+      "id": 12,
+      "type": "InpaintStitchImproved",
+      "pos": [
+        1640,
+        20
+      ],
+      "size": [
+        280,
+        50
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "stitcher",
+          "name": "stitcher",
+          "type": "STITCHER",
+          "link": 10
+        },
+        {
+          "localized_name": "inpainted_image",
+          "name": "inpainted_image",
+          "type": "IMAGE",
+          "link": 25
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "image",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            26,
+            27
+          ]
+        }
+      ],
+      "title": "✂ Inpaint Stitch",
+      "properties": {
+        "Node name for S&R": "InpaintStitchImproved",
+        "cnr_id": "comfyui-inpaint-cropandstitch"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 13,
+      "type": "SaveImage",
+      "pos": [
+        1640,
+        100
+      ],
+      "size": [
+        320,
+        280
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图片",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 26
+        },
+        {
+          "localized_name": "文件名前缀",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "filename_prefix"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "保存成品",
+      "properties": {
+        "Node name for S&R": "SaveImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "WAI_universal_inpaint_v1"
+      ]
+    },
+    {
+      "id": 14,
+      "type": "PreviewImage",
+      "pos": [
+        1640,
+        420
+      ],
+      "size": [
+        280,
+        280
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 27
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "预览缝合结果",
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 15,
+      "type": "PreviewImage",
+      "pos": [
+        920,
+        420
+      ],
+      "size": [
+        280,
+        260
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 13
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "预览 Crop 图",
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 16,
+      "type": "MaskToImage",
+      "pos": [
+        920,
+        710
+      ],
+      "size": [
+        240,
+        30
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            28
+          ]
+        }
+      ],
+      "title": "Crop Mask 可视化",
+      "properties": {
+        "Node name for S&R": "MaskToImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 17,
+      "type": "PreviewImage",
+      "pos": [
+        920,
+        770
+      ],
+      "size": [
+        280,
+        260
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 28
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "预览 Crop Mask",
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      8,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      1,
+      1,
+      3,
+      0,
+      "CLIP"
+    ],
+    [
+      3,
+      1,
+      1,
+      4,
+      0,
+      "CLIP"
+    ],
+    [
+      4,
+      1,
+      2,
+      7,
+      2,
+      "VAE"
+    ],
+    [
+      5,
+      1,
+      2,
+      10,
+      1,
+      "VAE"
+    ],
+    [
+      6,
+      2,
+      0,
+      5,
+      0,
+      "IMAGE"
+    ],
+    [
+      7,
+      2,
+      1,
+      5,
+      1,
+      "MASK"
+    ],
+    [
+      8,
+      3,
+      0,
+      7,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      9,
+      4,
+      0,
+      7,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      10,
+      5,
+      0,
+      12,
+      0,
+      "STITCHER"
+    ],
+    [
+      11,
+      5,
+      1,
+      7,
+      3,
+      "IMAGE"
+    ],
+    [
+      12,
+      5,
+      1,
+      11,
+      1,
+      "IMAGE"
+    ],
+    [
+      13,
+      5,
+      1,
+      15,
+      0,
+      "IMAGE"
+    ],
+    [
+      14,
+      5,
+      2,
+      7,
+      4,
+      "MASK"
+    ],
+    [
+      15,
+      5,
+      2,
+      11,
+      2,
+      "MASK"
+    ],
+    [
+      16,
+      5,
+      2,
+      16,
+      0,
+      "MASK"
+    ],
+    [
+      17,
+      6,
+      0,
+      8,
+      1,
+      "INPAINT_PATCH"
+    ],
+    [
+      18,
+      7,
+      0,
+      9,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      19,
+      7,
+      1,
+      9,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      20,
+      7,
+      2,
+      8,
+      2,
+      "LATENT"
+    ],
+    [
+      21,
+      7,
+      3,
+      9,
+      3,
+      "LATENT"
+    ],
+    [
+      22,
+      8,
+      0,
+      9,
+      0,
+      "MODEL"
+    ],
+    [
+      23,
+      9,
+      0,
+      10,
+      0,
+      "LATENT"
+    ],
+    [
+      24,
+      10,
+      0,
+      11,
+      0,
+      "IMAGE"
+    ],
+    [
+      25,
+      11,
+      0,
+      12,
+      1,
+      "IMAGE"
+    ],
+    [
+      26,
+      12,
+      0,
+      13,
+      0,
+      "IMAGE"
+    ],
+    [
+      27,
+      12,
+      0,
+      14,
+      0,
+      "IMAGE"
+    ],
+    [
+      28,
+      16,
+      0,
+      17,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "1 模型与底图",
+      "bounding": [
+        0,
+        -10,
+        430,
+        540
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "2 Prompt + Crop（Mask 外不进 VAE）",
+      "bounding": [
+        430,
+        -10,
+        440,
+        1100
+      ],
+      "color": "#8A8",
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "3 Fooocus Inpaint + 一次采样",
+      "bounding": [
+        900,
+        -10,
+        720,
+        1070
+      ],
+      "color": "#A88",
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "4 Stitch 缝回原图",
+      "bounding": [
+        1620,
+        -10,
+        360,
+        730
+      ],
+      "color": "#88A",
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.72,
+      "offset": [
+        40,
+        340
+      ]
+    }
+  },
+  "version": 0.4
+}

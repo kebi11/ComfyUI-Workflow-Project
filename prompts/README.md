@@ -25,4 +25,6 @@ prompts/
 - `positive/quality.md`
 - `negative/base-negative.md`
 - `negative/anatomy-negative.md`
+- `positive/clothing-undress-v1.md`（AutoClothes Phase 1）
+- `negative/undress-negative-v1.md`（AutoClothes Phase 1）
 - `templates/character-template.md`

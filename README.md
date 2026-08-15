@@ -9,9 +9,10 @@
 | 项 | 状态 |
 |---|---|
 | 项目框架 | 已按 `PROJECT_STRUCTURE.md` 搭好 |
-| Baseline 工作流 | 尚未录入 |
+| Baseline 工作流 | 新主线：`workflows/baseline/2/WAI_Universal_Inpaint_v1.json`（未实测） |
+| 旧方案一备份 | `workflows/baseline/1/` 与 `workflows/experiments/` 的 v1–v3 |
 | Release 工作流 | 尚无正式版本 |
-| 推荐正式工作流 | 暂无，请先建立并验证 Baseline |
+| 推荐正式工作流 | 暂无，先按方案一第 14 节验收 |
 | 硬件约束 | RTX 4050 Laptop / 约 6 GB VRAM / 16 GB RAM |
 
 开始实际出图前，先补齐：

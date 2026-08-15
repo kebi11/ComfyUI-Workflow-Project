@@ -1,0 +1,5930 @@
+{
+  "id": "01-wai-character-lock-cloth-v3",
+  "revision": 0,
+  "last_node_id": 89,
+  "last_link_id": 137,
+  "nodes": [
+    {
+      "id": 28,
+      "type": "Note",
+      "pos": [
+        30,
+        -280
+      ],
+      "size": [
+        860,
+        280
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "方案一 v2 用法",
+      "properties": {},
+      "widgets_values": [
+        "方案一 v2：防分层\n\n1. 只在遮罩层用遮罩笔把整件衣服涂实（黑底亮白剪影，不要开负面）。\n2. 只改绿色节点「正向-新服装」。\n3. 三套 Mask 已自动从同一张手绘 Mask 分出：\n   Generation=生成区  Composite=柔和贴回  Seam=只修接缝\n4. 第一遍 denoise=1.00 换装；第二遍 denoise=0.15 只修衣缘。\n5. 预览必须看「已Composite」版本。Mask 外应是原图像素。\n6. 若衣服内部花纹不好：把节点24的 Mask 临时改接到 Generation Mask，修完改回 Seam。"
+      ],
+      "color": "#432",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 1,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        30,
+        20
+      ],
+      "size": [
+        390,
+        98
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "Checkpoint名称",
+          "name": "ckpt_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "ckpt_name"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1,
+            2,
+            72,
+            73,
+            74
+          ]
+        },
+        {
+          "localized_name": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            3,
+            4,
+            5,
+            6,
+            75,
+            76,
+            77,
+            78
+          ]
+        },
+        {
+          "localized_name": "VAE",
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            7,
+            8,
+            9,
+            10,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "waiIllustriousSDXL_v170.safetensors"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "LoadImage",
+      "pos": [
+        30,
+        160
+      ],
+      "size": [
+        390,
+        340
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "选择文件上传",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            11
+          ]
+        },
+        {
+          "localized_name": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            12
+          ]
+        }
+      ],
+      "title": "底图-右键画服装Mask",
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "顾.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "ImageScale",
+      "pos": [
+        30,
+        540
+      ],
+      "size": [
+        390,
+        130
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 11
+        },
+        {
+          "localized_name": "缩放算法",
+          "name": "upscale_method",
+          "type": "COMBO",
+          "widget": {
+            "name": "upscale_method"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "宽度",
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "高度",
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "裁剪",
+          "name": "crop",
+          "type": "COMBO",
+          "widget": {
+            "name": "crop"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            13,
+            55,
+            56
+          ]
+        }
+      ],
+      "title": "工作尺寸 800x1216",
+      "properties": {
+        "Node name for S&R": "ImageScale",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "lanczos",
+        800,
+        1216,
+        "disabled"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "CLIPTextEncode",
+      "pos": [
+        460,
+        20
+      ],
+      "size": [
+        430,
+        180
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 3
+        },
+        {
+          "localized_name": "文本",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            25
+          ]
+        }
+      ],
+      "title": "正向-固定人物（不要改）",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "masterpiece, best quality, amazing quality, newest, very aesthetic, absurdres,\n1girl, adult woman, same person, same face,\nlong black hair, bangs, blue eyes, pale skin,\ntall slender body, long legs, slim waist,\nconsistent hairstyle, consistent hair color, consistent skin tone, consistent body proportions"
+      ]
+    },
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [
+        460,
+        230
+      ],
+      "size": [
+        430,
+        160
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 5
+        },
+        {
+          "localized_name": "文本",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            26
+          ]
+        }
+      ],
+      "title": "正向-新服装【每次只改这里】",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core"
+      },
+      "color": "#232",
+      "bgcolor": "#353",
+      "widgets_values": [
+        "wearing a white blouse and a long black skirt, clean clothing folds, accurate garment structure,\nnatural clothing-body contact, consistent lighting, consistent shadow direction,\nconsistent color temperature, soft natural garment edges, natural fabric contact and folds"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "CLIPTextEncode",
+      "pos": [
+        460,
+        420
+      ],
+      "size": [
+        430,
+        120
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 6
+        },
+        {
+          "localized_name": "文本",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            28
+          ]
+        }
+      ],
+      "title": "正向-原场景（默认不动）",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "standing, looking at viewer, beach, ocean, blue sky, same background"
+      ]
+    },
+    {
+      "id": 8,
+      "type": "ConditioningConcat",
+      "pos": [
+        460,
+        570
+      ],
+      "size": [
+        280,
+        50
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "conditioning_to",
+          "name": "conditioning_to",
+          "type": "CONDITIONING",
+          "link": 25
+        },
+        {
+          "localized_name": "conditioning_from",
+          "name": "conditioning_from",
+          "type": "CONDITIONING",
+          "link": 26
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            27
+          ]
+        }
+      ],
+      "title": "拼接 人物+服装",
+      "properties": {
+        "Node name for S&R": "ConditioningConcat",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 9,
+      "type": "ConditioningConcat",
+      "pos": [
+        460,
+        650
+      ],
+      "size": [
+        280,
+        50
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "conditioning_to",
+          "name": "conditioning_to",
+          "type": "CONDITIONING",
+          "link": 27
+        },
+        {
+          "localized_name": "conditioning_from",
+          "name": "conditioning_from",
+          "type": "CONDITIONING",
+          "link": 28
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            29,
+            38,
+            85,
+            86,
+            87
+          ]
+        }
+      ],
+      "title": "拼接 +场景",
+      "properties": {
+        "Node name for S&R": "ConditioningConcat",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 3,
+      "type": "CLIPTextEncode",
+      "pos": [
+        460,
+        730
+      ],
+      "size": [
+        430,
+        180
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 4
+        },
+        {
+          "localized_name": "文本",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            30,
+            39,
+            88
+          ]
+        }
+      ],
+      "title": "负向-辅助锁定",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "different person, different face, different hairstyle, different hair color, different body type, different skin tone, short legs, wide waist, different proportions,\nworst quality, low quality, bad anatomy, extra fingers, extra limbs, deformed,\nwatermark, text, signature, child, loli"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "MaskToImage",
+      "pos": [
+        940,
+        20
+      ],
+      "size": [
+        240,
+        30
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 12
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            14
+          ]
+        }
+      ],
+      "title": "Mask对齐尺寸",
+      "properties": {
+        "Node name for S&R": "MaskToImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 11,
+      "type": "ImageScale",
+      "pos": [
+        940,
+        80
+      ],
+      "size": [
+        280,
+        130
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 14
+        },
+        {
+          "localized_name": "缩放算法",
+          "name": "upscale_method",
+          "type": "COMBO",
+          "widget": {
+            "name": "upscale_method"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "宽度",
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "高度",
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "裁剪",
+          "name": "crop",
+          "type": "COMBO",
+          "widget": {
+            "name": "crop"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            15
+          ]
+        }
+      ],
+      "title": "Mask缩到 800x1216",
+      "properties": {
+        "Node name for S&R": "ImageScale",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "bilinear",
+        800,
+        1216,
+        "disabled"
+      ]
+    },
+    {
+      "id": 12,
+      "type": "ImageToMask",
+      "pos": [
+        940,
+        240
+      ],
+      "size": [
+        280,
+        58
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 15
+        },
+        {
+          "localized_name": "通道",
+          "name": "channel",
+          "type": "COMBO",
+          "widget": {
+            "name": "channel"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            16,
+            57,
+            58,
+            59
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageToMask",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "red"
+      ]
+    },
+    {
+      "id": 13,
+      "type": "GrowMask",
+      "pos": [
+        940,
+        330
+      ],
+      "size": [
+        280,
+        82
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 16
+        },
+        {
+          "localized_name": "expand",
+          "name": "expand",
+          "type": "INT",
+          "widget": {
+            "name": "expand"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "tapered_corners",
+          "name": "tapered_corners",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "tapered_corners"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "MASK",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            17
+          ]
+        }
+      ],
+      "title": "Generation Grow 12",
+      "properties": {
+        "Node name for S&R": "GrowMask",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        12,
+        true
+      ]
+    },
+    {
+      "id": 14,
+      "type": "MaskToImage",
+      "pos": [
+        940,
+        440
+      ],
+      "size": [
+        240,
+        30
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            18
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 15,
+      "type": "ImageBlur",
+      "pos": [
+        940,
+        500
+      ],
+      "size": [
+        280,
+        82
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 18
+        },
+        {
+          "localized_name": "blur_radius",
+          "name": "blur_radius",
+          "type": "INT",
+          "widget": {
+            "name": "blur_radius"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "sigma",
+          "name": "sigma",
+          "type": "FLOAT",
+          "widget": {
+            "name": "sigma"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            19,
+            20
+          ]
+        }
+      ],
+      "title": "Generation Blur 8",
+      "properties": {
+        "Node name for S&R": "ImageBlur",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        8,
+        1.5
+      ]
+    },
+    {
+      "id": 16,
+      "type": "ImageToMask",
+      "pos": [
+        940,
+        610
+      ],
+      "size": [
+        280,
+        58
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 19
+        },
+        {
+          "localized_name": "通道",
+          "name": "channel",
+          "type": "COMBO",
+          "widget": {
+            "name": "channel"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            21,
+            22
+          ]
+        }
+      ],
+      "title": "Generation Mask｜生成区",
+      "properties": {
+        "Node name for S&R": "ImageToMask",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "red"
+      ]
+    },
+    {
+      "id": 17,
+      "type": "PreviewImage",
+      "pos": [
+        940,
+        700
+      ],
+      "size": [
+        280,
+        280
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "预览 Generation Mask",
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 18,
+      "type": "VAEEncodeForInpaint",
+      "pos": [
+        1280,
+        20
+      ],
+      "size": [
+        300,
+        98
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "像素",
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 13
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 7
+        },
+        {
+          "localized_name": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "link": 21
+        },
+        {
+          "localized_name": "grow_mask_by",
+          "name": "grow_mask_by",
+          "type": "INT",
+          "widget": {
+            "name": "grow_mask_by"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            31
+          ]
+        }
+      ],
+      "title": "Inpaint编码 grow_mask_by=0",
+      "properties": {
+        "Node name for S&R": "VAEEncodeForInpaint",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        0
+      ]
+    },
+    {
+      "id": 19,
+      "type": "SetLatentNoiseMask",
+      "pos": [
+        1280,
+        150
+      ],
+      "size": [
+        300,
+        46
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "samples",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 31
+        },
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 22
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            32
+          ]
+        }
+      ],
+      "title": "写回软边Mask",
+      "properties": {
+        "Node name for S&R": "SetLatentNoiseMask",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 20,
+      "type": "KSampler",
+      "pos": [
+        1280,
+        230
+      ],
+      "size": [
+        310,
+        262
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        },
+        {
+          "localized_name": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 29
+        },
+        {
+          "localized_name": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 30
+        },
+        {
+          "localized_name": "Latent图像",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 32
+        },
+        {
+          "localized_name": "种子",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "步数",
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "cfg",
+          "name": "cfg",
+          "type": "FLOAT",
+          "widget": {
+            "name": "cfg"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "采样器名称",
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "调度器",
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "降噪",
+          "name": "denoise",
+          "type": "FLOAT",
+          "widget": {
+            "name": "denoise"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            33
+          ]
+        }
+      ],
+      "title": "第一遍-服饰Inpaint 1.00",
+      "properties": {
+        "Node name for S&R": "KSampler",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        114514,
+        "fixed",
+        24,
+        5,
+        "euler_ancestral",
+        "normal",
+        1.0
+      ]
+    },
+    {
+      "id": 21,
+      "type": "VAEDecode",
+      "pos": [
+        1640,
+        20
+      ],
+      "size": [
+        220,
+        46
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "Latent",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 33
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            60
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 22,
+      "type": "PreviewImage",
+      "pos": [
+        1640,
+        220
+      ],
+      "size": [
+        280,
+        280
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 50
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "预览第一遍（已Composite）",
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 29,
+      "type": "SaveImage",
+      "pos": [
+        1640,
+        530
+      ],
+      "size": [
+        280,
+        270
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图片",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 52
+        },
+        {
+          "localized_name": "文件名前缀",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "保存第一遍（已Composite）",
+      "properties": {
+        "Node name for S&R": "SaveImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "01_WAI_v2_p1"
+      ]
+    },
+    {
+      "id": 23,
+      "type": "VAEEncode",
+      "pos": [
+        1980,
+        20
+      ],
+      "size": [
+        220,
+        50
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "像素",
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 53
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            36
+          ]
+        }
+      ],
+      "title": "第二遍普通编码-不擦成灰",
+      "properties": {
+        "Node name for S&R": "VAEEncode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 24,
+      "type": "SetLatentNoiseMask",
+      "pos": [
+        1980,
+        90
+      ],
+      "size": [
+        300,
+        46
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "samples",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 36
+        },
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 51
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            37
+          ]
+        }
+      ],
+      "title": "第二遍←Seam Mask",
+      "properties": {
+        "Node name for S&R": "SetLatentNoiseMask",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 25,
+      "type": "KSampler",
+      "pos": [
+        1980,
+        160
+      ],
+      "size": [
+        310,
+        262
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 2
+        },
+        {
+          "localized_name": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 38
+        },
+        {
+          "localized_name": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 39
+        },
+        {
+          "localized_name": "Latent图像",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 37
+        },
+        {
+          "localized_name": "种子",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "步数",
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "cfg",
+          "name": "cfg",
+          "type": "FLOAT",
+          "widget": {
+            "name": "cfg"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "采样器名称",
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "调度器",
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "降噪",
+          "name": "denoise",
+          "type": "FLOAT",
+          "widget": {
+            "name": "denoise"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            40
+          ]
+        }
+      ],
+      "title": "第二遍-服饰精修 0.15",
+      "properties": {
+        "Node name for S&R": "KSampler",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        114514,
+        "fixed",
+        12,
+        4.5,
+        "euler_ancestral",
+        "normal",
+        0.15
+      ]
+    },
+    {
+      "id": 26,
+      "type": "VAEDecode",
+      "pos": [
+        2340,
+        220
+      ],
+      "size": [
+        220,
+        46
+      ],
+      "flags": {},
+      "order": 27,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "Latent",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 40
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            61
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 27,
+      "type": "SaveImage",
+      "pos": [
+        2340,
+        290
+      ],
+      "size": [
+        320,
+        280
+      ],
+      "flags": {},
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图片",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 54
+        },
+        {
+          "localized_name": "文件名前缀",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "保存成品",
+      "properties": {
+        "Node name for S&R": "SaveImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "01_WAI_v2_lock"
+      ]
+    },
+    {
+      "id": 30,
+      "type": "GrowMask",
+      "pos": [
+        940,
+        1040
+      ],
+      "size": [
+        280,
+        82
+      ],
+      "flags": {},
+      "order": 29,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 57
+        },
+        {
+          "localized_name": "expand",
+          "name": "expand",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "expand"
+          }
+        },
+        {
+          "localized_name": "tapered_corners",
+          "name": "tapered_corners",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "tapered_corners"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "MASK",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            62
+          ]
+        }
+      ],
+      "title": "Composite Mask Grow 6",
+      "properties": {
+        "Node name for S&R": "GrowMask",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        6,
+        true
+      ]
+    },
+    {
+      "id": 31,
+      "type": "MaskToImage",
+      "pos": [
+        940,
+        1150
+      ],
+      "size": [
+        240,
+        30
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 62
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            63
+          ]
+        }
+      ],
+      "title": "Composite MaskToImage",
+      "properties": {
+        "Node name for S&R": "MaskToImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 32,
+      "type": "ImageBlur",
+      "pos": [
+        940,
+        1210
+      ],
+      "size": [
+        280,
+        82
+      ],
+      "flags": {},
+      "order": 31,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 63
+        },
+        {
+          "localized_name": "blur_radius",
+          "name": "blur_radius",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "blur_radius"
+          }
+        },
+        {
+          "localized_name": "sigma",
+          "name": "sigma",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "sigma"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            64
+          ]
+        }
+      ],
+      "title": "Composite Mask Blur 12",
+      "properties": {
+        "Node name for S&R": "ImageBlur",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        12,
+        2.0
+      ]
+    },
+    {
+      "id": 33,
+      "type": "ImageToMask",
+      "pos": [
+        940,
+        1320
+      ],
+      "size": [
+        280,
+        58
+      ],
+      "flags": {},
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 64,
+          "widget": {
+            "name": "图像"
+          }
+        },
+        {
+          "localized_name": "通道",
+          "name": "channel",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "channel"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            65,
+            66
+          ]
+        }
+      ],
+      "title": "Composite Mask｜柔和合成",
+      "properties": {
+        "Node name for S&R": "ImageToMask",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "red"
+      ]
+    },
+    {
+      "id": 34,
+      "type": "ImageCompositeMasked",
+      "pos": [
+        1640,
+        20
+      ],
+      "size": [
+        300,
+        170
+      ],
+      "flags": {},
+      "order": 33,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "destination",
+          "name": "destination",
+          "type": "IMAGE",
+          "link": 55
+        },
+        {
+          "localized_name": "source",
+          "name": "source",
+          "type": "IMAGE",
+          "link": 60
+        },
+        {
+          "localized_name": "x",
+          "name": "x",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "x"
+          }
+        },
+        {
+          "localized_name": "y",
+          "name": "y",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "y"
+          }
+        },
+        {
+          "localized_name": "resize_source",
+          "name": "resize_source",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "resize_source"
+          }
+        },
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 65,
+          "widget": {
+            "name": "遮罩"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            50,
+            52,
+            53
+          ]
+        }
+      ],
+      "title": "第一遍合成｜Mask外恢复原图",
+      "properties": {
+        "Node name for S&R": "ImageCompositeMasked",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        0,
+        0,
+        false
+      ]
+    },
+    {
+      "id": 35,
+      "type": "GrowMask",
+      "pos": [
+        1980,
+        560
+      ],
+      "size": [
+        280,
+        82
+      ],
+      "flags": {},
+      "order": 34,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 58
+        },
+        {
+          "localized_name": "expand",
+          "name": "expand",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "expand"
+          }
+        },
+        {
+          "localized_name": "tapered_corners",
+          "name": "tapered_corners",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "tapered_corners"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "MASK",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            67
+          ]
+        }
+      ],
+      "title": "Seam Outer Grow +10",
+      "properties": {
+        "Node name for S&R": "GrowMask",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        10,
+        true
+      ]
+    },
+    {
+      "id": 36,
+      "type": "GrowMask",
+      "pos": [
+        1980,
+        670
+      ],
+      "size": [
+        280,
+        82
+      ],
+      "flags": {},
+      "order": 35,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 59
+        },
+        {
+          "localized_name": "expand",
+          "name": "expand",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "expand"
+          }
+        },
+        {
+          "localized_name": "tapered_corners",
+          "name": "tapered_corners",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "tapered_corners"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "MASK",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            68
+          ]
+        }
+      ],
+      "title": "Seam Inner Grow -4",
+      "properties": {
+        "Node name for S&R": "GrowMask",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        -4,
+        true
+      ]
+    },
+    {
+      "id": 37,
+      "type": "MaskComposite",
+      "pos": [
+        1980,
+        780
+      ],
+      "size": [
+        280,
+        150
+      ],
+      "flags": {},
+      "order": 36,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "destination",
+          "name": "destination",
+          "type": "MASK",
+          "link": 67
+        },
+        {
+          "localized_name": "source",
+          "name": "source",
+          "type": "MASK",
+          "link": 68
+        },
+        {
+          "localized_name": "x",
+          "name": "x",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "x"
+          }
+        },
+        {
+          "localized_name": "y",
+          "name": "y",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "y"
+          }
+        },
+        {
+          "localized_name": "operation",
+          "name": "operation",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "operation"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "MASK",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            69
+          ]
+        }
+      ],
+      "title": "Seam Outer-Inner",
+      "properties": {
+        "Node name for S&R": "MaskComposite",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        0,
+        0,
+        "subtract"
+      ]
+    },
+    {
+      "id": 38,
+      "type": "MaskToImage",
+      "pos": [
+        1980,
+        960
+      ],
+      "size": [
+        240,
+        30
+      ],
+      "flags": {},
+      "order": 37,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 69
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            70
+          ]
+        }
+      ],
+      "title": "Seam MaskToImage",
+      "properties": {
+        "Node name for S&R": "MaskToImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 39,
+      "type": "ImageBlur",
+      "pos": [
+        1980,
+        1020
+      ],
+      "size": [
+        280,
+        82
+      ],
+      "flags": {},
+      "order": 38,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 70
+        },
+        {
+          "localized_name": "blur_radius",
+          "name": "blur_radius",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "blur_radius"
+          }
+        },
+        {
+          "localized_name": "sigma",
+          "name": "sigma",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "sigma"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            71
+          ]
+        }
+      ],
+      "title": "Seam Blur 6",
+      "properties": {
+        "Node name for S&R": "ImageBlur",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        6,
+        1.5
+      ]
+    },
+    {
+      "id": 40,
+      "type": "ImageToMask",
+      "pos": [
+        1980,
+        1130
+      ],
+      "size": [
+        280,
+        58
+      ],
+      "flags": {},
+      "order": 39,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 71,
+          "widget": {
+            "name": "图像"
+          }
+        },
+        {
+          "localized_name": "通道",
+          "name": "channel",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "channel"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            51
+          ]
+        }
+      ],
+      "title": "Seam Mask｜接缝环带",
+      "properties": {
+        "Node name for S&R": "ImageToMask",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "red"
+      ]
+    },
+    {
+      "id": 41,
+      "type": "ImageCompositeMasked",
+      "pos": [
+        2340,
+        20
+      ],
+      "size": [
+        300,
+        170
+      ],
+      "flags": {},
+      "order": 40,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "destination",
+          "name": "destination",
+          "type": "IMAGE",
+          "link": 56
+        },
+        {
+          "localized_name": "source",
+          "name": "source",
+          "type": "IMAGE",
+          "link": 61
+        },
+        {
+          "localized_name": "x",
+          "name": "x",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "x"
+          }
+        },
+        {
+          "localized_name": "y",
+          "name": "y",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "y"
+          }
+        },
+        {
+          "localized_name": "resize_source",
+          "name": "resize_source",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "resize_source"
+          }
+        },
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 66,
+          "widget": {
+            "name": "遮罩"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            54,
+            89,
+            90
+          ]
+        }
+      ],
+      "title": "v2成品｜v3从这里开始修",
+      "properties": {
+        "Node name for S&R": "ImageCompositeMasked",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        0,
+        0,
+        false
+      ]
+    },
+    {
+      "id": 42,
+      "type": "LoadImage",
+      "pos": [
+        2700,
+        20
+      ],
+      "size": [
+        320,
+        340
+      ],
+      "flags": {},
+      "order": 41,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "image"
+          }
+        },
+        {
+          "localized_name": "选择文件上传",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "link": null,
+          "widget": {
+            "name": "upload"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "localized_name": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            91
+          ]
+        }
+      ],
+      "title": "Structure Fix Mask｜只涂残影",
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "顾.jpg",
+        "image"
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 61,
+      "type": "MaskToImage",
+      "pos": [
+        2700,
+        390
+      ],
+      "size": [
+        240,
+        30
+      ],
+      "flags": {},
+      "order": 42,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 91
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            92
+          ]
+        }
+      ],
+      "title": "A Mask对齐",
+      "properties": {
+        "Node name for S&R": "MaskToImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 62,
+      "type": "ImageScale",
+      "pos": [
+        2700,
+        440
+      ],
+      "size": [
+        280,
+        130
+      ],
+      "flags": {},
+      "order": 43,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 92
+        },
+        {
+          "localized_name": "缩放算法",
+          "name": "upscale_method",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "upscale_method"
+          }
+        },
+        {
+          "localized_name": "宽度",
+          "name": "width",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "width"
+          }
+        },
+        {
+          "localized_name": "高度",
+          "name": "height",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "height"
+          }
+        },
+        {
+          "localized_name": "裁剪",
+          "name": "crop",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "crop"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            93
+          ]
+        }
+      ],
+      "title": "A Mask 800x1216",
+      "properties": {
+        "Node name for S&R": "ImageScale",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "bilinear",
+        800,
+        1216,
+        "disabled"
+      ]
+    },
+    {
+      "id": 63,
+      "type": "ImageBlur",
+      "pos": [
+        2700,
+        590
+      ],
+      "size": [
+        280,
+        82
+      ],
+      "flags": {},
+      "order": 44,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 93
+        },
+        {
+          "localized_name": "blur_radius",
+          "name": "blur_radius",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "blur_radius"
+          }
+        },
+        {
+          "localized_name": "sigma",
+          "name": "sigma",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "sigma"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            94
+          ]
+        }
+      ],
+      "title": "A Mask Blur 4",
+      "properties": {
+        "Node name for S&R": "ImageBlur",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        4,
+        1.2
+      ]
+    },
+    {
+      "id": 64,
+      "type": "ImageToMask",
+      "pos": [
+        2700,
+        690
+      ],
+      "size": [
+        280,
+        58
+      ],
+      "flags": {},
+      "order": 45,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 94
+        },
+        {
+          "localized_name": "通道",
+          "name": "channel",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "channel"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            95,
+            96
+          ]
+        }
+      ],
+      "title": "A Mask 就绪",
+      "properties": {
+        "Node name for S&R": "ImageToMask",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "red"
+      ]
+    },
+    {
+      "id": 43,
+      "type": "VAEEncode",
+      "pos": [
+        3060,
+        20
+      ],
+      "size": [
+        220,
+        50
+      ],
+      "flags": {},
+      "order": 46,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "像素",
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 89
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 79
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            97
+          ]
+        }
+      ],
+      "title": "A 编码",
+      "properties": {
+        "Node name for S&R": "VAEEncode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 44,
+      "type": "SetLatentNoiseMask",
+      "pos": [
+        3060,
+        90
+      ],
+      "size": [
+        280,
+        46
+      ],
+      "flags": {},
+      "order": 47,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "samples",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 97
+        },
+        {
+          "localized_name": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "link": 95
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            98
+          ]
+        }
+      ],
+      "title": "A ← Structure Fix Mask",
+      "properties": {
+        "Node name for S&R": "SetLatentNoiseMask",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 77,
+      "type": "CLIPTextEncode",
+      "pos": [
+        3060,
+        160
+      ],
+      "size": [
+        360,
+        140
+      ],
+      "flags": {},
+      "order": 48,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 75
+        },
+        {
+          "localized_name": "文本",
+          "name": "text",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            99
+          ]
+        }
+      ],
+      "title": "A正向补充",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "clean skirt silhouette, opaque black skirt, clean garment outline, no transparent fabric, no trailing translucent cloth, clear hemline, natural black skirt shape"
+      ]
+    },
+    {
+      "id": 78,
+      "type": "ConditioningConcat",
+      "pos": [
+        3060,
+        320
+      ],
+      "size": [
+        280,
+        50
+      ],
+      "flags": {},
+      "order": 49,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "conditioning_to",
+          "name": "conditioning_to",
+          "type": "CONDITIONING",
+          "link": 85
+        },
+        {
+          "localized_name": "conditioning_from",
+          "name": "conditioning_from",
+          "type": "CONDITIONING",
+          "link": 99
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            100
+          ]
+        }
+      ],
+      "title": "A 主提示+补充",
+      "properties": {
+        "Node name for S&R": "ConditioningConcat",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 45,
+      "type": "KSampler",
+      "pos": [
+        3060,
+        390
+      ],
+      "size": [
+        310,
+        262
+      ],
+      "flags": {},
+      "order": 50,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 72
+        },
+        {
+          "localized_name": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 100
+        },
+        {
+          "localized_name": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 101
+        },
+        {
+          "localized_name": "Latent图像",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 98
+        },
+        {
+          "localized_name": "种子",
+          "name": "seed",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "seed"
+          }
+        },
+        {
+          "localized_name": "步数",
+          "name": "steps",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "steps"
+          }
+        },
+        {
+          "localized_name": "cfg",
+          "name": "cfg",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "cfg"
+          }
+        },
+        {
+          "localized_name": "采样器名称",
+          "name": "sampler_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "sampler_name"
+          }
+        },
+        {
+          "localized_name": "调度器",
+          "name": "scheduler",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "scheduler"
+          }
+        },
+        {
+          "localized_name": "降噪",
+          "name": "denoise",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "denoise"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            102
+          ]
+        }
+      ],
+      "title": "A 结构修复 0.22",
+      "properties": {
+        "Node name for S&R": "KSampler",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        114514,
+        "fixed",
+        16,
+        4.8,
+        "euler_ancestral",
+        "normal",
+        0.22
+      ]
+    },
+    {
+      "id": 46,
+      "type": "VAEDecode",
+      "pos": [
+        3060,
+        680
+      ],
+      "size": [
+        220,
+        46
+      ],
+      "flags": {},
+      "order": 51,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "Latent",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 102
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 80
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            103
+          ]
+        }
+      ],
+      "title": "A 解码",
+      "properties": {
+        "Node name for S&R": "VAEDecode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 47,
+      "type": "ImageCompositeMasked",
+      "pos": [
+        3060,
+        750
+      ],
+      "size": [
+        300,
+        170
+      ],
+      "flags": {},
+      "order": 52,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "destination",
+          "name": "destination",
+          "type": "IMAGE",
+          "link": 90
+        },
+        {
+          "localized_name": "source",
+          "name": "source",
+          "type": "IMAGE",
+          "link": 103
+        },
+        {
+          "localized_name": "x",
+          "name": "x",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "x"
+          }
+        },
+        {
+          "localized_name": "y",
+          "name": "y",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "y"
+          }
+        },
+        {
+          "localized_name": "resize_source",
+          "name": "resize_source",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "resize_source"
+          }
+        },
+        {
+          "localized_name": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "link": 96
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            104,
+            105,
+            106
+          ]
+        }
+      ],
+      "title": "A后结果｜结构已修",
+      "properties": {
+        "Node name for S&R": "ImageCompositeMasked",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        0,
+        0,
+        false
+      ]
+    },
+    {
+      "id": 85,
+      "type": "SaveImage",
+      "pos": [
+        3060,
+        950
+      ],
+      "size": [
+        280,
+        250
+      ],
+      "flags": {},
+      "order": 53,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图片",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 104
+        },
+        {
+          "localized_name": "文件名前缀",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "filename_prefix"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "保存A",
+      "properties": {
+        "Node name for S&R": "SaveImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "01_WAI_v3_A"
+      ]
+    },
+    {
+      "id": 48,
+      "type": "LoadImage",
+      "pos": [
+        3420,
+        20
+      ],
+      "size": [
+        320,
+        340
+      ],
+      "flags": {},
+      "order": 54,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "image"
+          }
+        },
+        {
+          "localized_name": "选择文件上传",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "link": null,
+          "widget": {
+            "name": "upload"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "localized_name": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            107
+          ]
+        }
+      ],
+      "title": "Waist Blend Mask｜只涂腰线",
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "顾.jpg",
+        "image"
+      ],
+      "color": "#332",
+      "bgcolor": "#553"
+    },
+    {
+      "id": 65,
+      "type": "MaskToImage",
+      "pos": [
+        3420,
+        390
+      ],
+      "size": [
+        240,
+        30
+      ],
+      "flags": {},
+      "order": 55,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 107
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            108
+          ]
+        }
+      ],
+      "title": "B Mask对齐",
+      "properties": {
+        "Node name for S&R": "MaskToImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 66,
+      "type": "ImageScale",
+      "pos": [
+        3420,
+        440
+      ],
+      "size": [
+        280,
+        130
+      ],
+      "flags": {},
+      "order": 56,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 108
+        },
+        {
+          "localized_name": "缩放算法",
+          "name": "upscale_method",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "upscale_method"
+          }
+        },
+        {
+          "localized_name": "宽度",
+          "name": "width",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "width"
+          }
+        },
+        {
+          "localized_name": "高度",
+          "name": "height",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "height"
+          }
+        },
+        {
+          "localized_name": "裁剪",
+          "name": "crop",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "crop"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            109
+          ]
+        }
+      ],
+      "title": "B Mask 800x1216",
+      "properties": {
+        "Node name for S&R": "ImageScale",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "bilinear",
+        800,
+        1216,
+        "disabled"
+      ]
+    },
+    {
+      "id": 67,
+      "type": "ImageBlur",
+      "pos": [
+        3420,
+        590
+      ],
+      "size": [
+        280,
+        82
+      ],
+      "flags": {},
+      "order": 57,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 109
+        },
+        {
+          "localized_name": "blur_radius",
+          "name": "blur_radius",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "blur_radius"
+          }
+        },
+        {
+          "localized_name": "sigma",
+          "name": "sigma",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "sigma"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            110
+          ]
+        }
+      ],
+      "title": "B Mask Blur 4",
+      "properties": {
+        "Node name for S&R": "ImageBlur",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        4,
+        1.2
+      ]
+    },
+    {
+      "id": 68,
+      "type": "ImageToMask",
+      "pos": [
+        3420,
+        690
+      ],
+      "size": [
+        280,
+        58
+      ],
+      "flags": {},
+      "order": 58,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 110
+        },
+        {
+          "localized_name": "通道",
+          "name": "channel",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "channel"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            111,
+            112
+          ]
+        }
+      ],
+      "title": "B Mask 就绪",
+      "properties": {
+        "Node name for S&R": "ImageToMask",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "red"
+      ]
+    },
+    {
+      "id": 49,
+      "type": "VAEEncode",
+      "pos": [
+        3780,
+        20
+      ],
+      "size": [
+        220,
+        50
+      ],
+      "flags": {},
+      "order": 59,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "像素",
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 105
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 81
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            113
+          ]
+        }
+      ],
+      "title": "B 编码",
+      "properties": {
+        "Node name for S&R": "VAEEncode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 50,
+      "type": "SetLatentNoiseMask",
+      "pos": [
+        3780,
+        90
+      ],
+      "size": [
+        280,
+        46
+      ],
+      "flags": {},
+      "order": 60,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "samples",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 113
+        },
+        {
+          "localized_name": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "link": 111
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            114
+          ]
+        }
+      ],
+      "title": "B ← Waist Blend Mask",
+      "properties": {
+        "Node name for S&R": "SetLatentNoiseMask",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 79,
+      "type": "CLIPTextEncode",
+      "pos": [
+        3780,
+        160
+      ],
+      "size": [
+        360,
+        140
+      ],
+      "flags": {},
+      "order": 61,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 76
+        },
+        {
+          "localized_name": "文本",
+          "name": "text",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            115
+          ]
+        }
+      ],
+      "title": "B正向补充",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "natural clothing-body contact, soft contact shadows, natural waist transition, consistent lighting, consistent shadow direction, subtle ambient occlusion, natural blouse-to-skirt connection"
+      ]
+    },
+    {
+      "id": 80,
+      "type": "ConditioningConcat",
+      "pos": [
+        3780,
+        320
+      ],
+      "size": [
+        280,
+        50
+      ],
+      "flags": {},
+      "order": 62,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "conditioning_to",
+          "name": "conditioning_to",
+          "type": "CONDITIONING",
+          "link": 86
+        },
+        {
+          "localized_name": "conditioning_from",
+          "name": "conditioning_from",
+          "type": "CONDITIONING",
+          "link": 115
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            116
+          ]
+        }
+      ],
+      "title": "B 主提示+补充",
+      "properties": {
+        "Node name for S&R": "ConditioningConcat",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 51,
+      "type": "KSampler",
+      "pos": [
+        3780,
+        390
+      ],
+      "size": [
+        310,
+        262
+      ],
+      "flags": {},
+      "order": 63,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 73
+        },
+        {
+          "localized_name": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 116
+        },
+        {
+          "localized_name": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 117
+        },
+        {
+          "localized_name": "Latent图像",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 114
+        },
+        {
+          "localized_name": "种子",
+          "name": "seed",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "seed"
+          }
+        },
+        {
+          "localized_name": "步数",
+          "name": "steps",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "steps"
+          }
+        },
+        {
+          "localized_name": "cfg",
+          "name": "cfg",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "cfg"
+          }
+        },
+        {
+          "localized_name": "采样器名称",
+          "name": "sampler_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "sampler_name"
+          }
+        },
+        {
+          "localized_name": "调度器",
+          "name": "scheduler",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "scheduler"
+          }
+        },
+        {
+          "localized_name": "降噪",
+          "name": "denoise",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "denoise"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            118
+          ]
+        }
+      ],
+      "title": "B 腰线融合 0.12",
+      "properties": {
+        "Node name for S&R": "KSampler",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        114514,
+        "fixed",
+        12,
+        4.5,
+        "euler_ancestral",
+        "normal",
+        0.12
+      ]
+    },
+    {
+      "id": 52,
+      "type": "VAEDecode",
+      "pos": [
+        3780,
+        680
+      ],
+      "size": [
+        220,
+        46
+      ],
+      "flags": {},
+      "order": 64,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "Latent",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 118
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 82
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            119
+          ]
+        }
+      ],
+      "title": "B 解码",
+      "properties": {
+        "Node name for S&R": "VAEDecode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 53,
+      "type": "ImageCompositeMasked",
+      "pos": [
+        3780,
+        750
+      ],
+      "size": [
+        300,
+        170
+      ],
+      "flags": {},
+      "order": 65,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "destination",
+          "name": "destination",
+          "type": "IMAGE",
+          "link": 106
+        },
+        {
+          "localized_name": "source",
+          "name": "source",
+          "type": "IMAGE",
+          "link": 119
+        },
+        {
+          "localized_name": "x",
+          "name": "x",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "x"
+          }
+        },
+        {
+          "localized_name": "y",
+          "name": "y",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "y"
+          }
+        },
+        {
+          "localized_name": "resize_source",
+          "name": "resize_source",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "resize_source"
+          }
+        },
+        {
+          "localized_name": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "link": 112
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            120,
+            121,
+            122
+          ]
+        }
+      ],
+      "title": "B后结果｜腰线已融合",
+      "properties": {
+        "Node name for S&R": "ImageCompositeMasked",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        0,
+        0,
+        false
+      ]
+    },
+    {
+      "id": 86,
+      "type": "SaveImage",
+      "pos": [
+        3780,
+        950
+      ],
+      "size": [
+        280,
+        250
+      ],
+      "flags": {},
+      "order": 66,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图片",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 120
+        },
+        {
+          "localized_name": "文件名前缀",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "filename_prefix"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "保存B",
+      "properties": {
+        "Node name for S&R": "SaveImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "01_WAI_v3_B"
+      ]
+    },
+    {
+      "id": 54,
+      "type": "LoadImage",
+      "pos": [
+        4140,
+        20
+      ],
+      "size": [
+        320,
+        340
+      ],
+      "flags": {},
+      "order": 67,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "image"
+          }
+        },
+        {
+          "localized_name": "选择文件上传",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "link": null,
+          "widget": {
+            "name": "upload"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "localized_name": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            123
+          ]
+        }
+      ],
+      "title": "Hem Seam Mask｜只涂裙摆边",
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "顾.jpg",
+        "image"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 69,
+      "type": "MaskToImage",
+      "pos": [
+        4140,
+        390
+      ],
+      "size": [
+        240,
+        30
+      ],
+      "flags": {},
+      "order": 68,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 123
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            124
+          ]
+        }
+      ],
+      "title": "C Mask对齐",
+      "properties": {
+        "Node name for S&R": "MaskToImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 87,
+      "type": "ImageScale",
+      "pos": [
+        4140,
+        440
+      ],
+      "size": [
+        280,
+        130
+      ],
+      "flags": {},
+      "order": 69,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 124
+        },
+        {
+          "localized_name": "缩放算法",
+          "name": "upscale_method",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "upscale_method"
+          }
+        },
+        {
+          "localized_name": "宽度",
+          "name": "width",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "width"
+          }
+        },
+        {
+          "localized_name": "高度",
+          "name": "height",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "height"
+          }
+        },
+        {
+          "localized_name": "裁剪",
+          "name": "crop",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "crop"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            125
+          ]
+        }
+      ],
+      "title": "C Mask 800x1216",
+      "properties": {
+        "Node name for S&R": "ImageScale",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "bilinear",
+        800,
+        1216,
+        "disabled"
+      ]
+    },
+    {
+      "id": 88,
+      "type": "ImageBlur",
+      "pos": [
+        4140,
+        590
+      ],
+      "size": [
+        280,
+        82
+      ],
+      "flags": {},
+      "order": 70,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 125
+        },
+        {
+          "localized_name": "blur_radius",
+          "name": "blur_radius",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "blur_radius"
+          }
+        },
+        {
+          "localized_name": "sigma",
+          "name": "sigma",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "sigma"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            126
+          ]
+        }
+      ],
+      "title": "C Mask Blur 4",
+      "properties": {
+        "Node name for S&R": "ImageBlur",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        4,
+        1.2
+      ]
+    },
+    {
+      "id": 89,
+      "type": "ImageToMask",
+      "pos": [
+        4140,
+        690
+      ],
+      "size": [
+        280,
+        58
+      ],
+      "flags": {},
+      "order": 71,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 126
+        },
+        {
+          "localized_name": "通道",
+          "name": "channel",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "channel"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            127,
+            128
+          ]
+        }
+      ],
+      "title": "C Mask 就绪",
+      "properties": {
+        "Node name for S&R": "ImageToMask",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "red"
+      ]
+    },
+    {
+      "id": 55,
+      "type": "VAEEncode",
+      "pos": [
+        4500,
+        20
+      ],
+      "size": [
+        220,
+        50
+      ],
+      "flags": {},
+      "order": 72,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "像素",
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 121
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 83
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            129
+          ]
+        }
+      ],
+      "title": "C 编码",
+      "properties": {
+        "Node name for S&R": "VAEEncode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 56,
+      "type": "SetLatentNoiseMask",
+      "pos": [
+        4500,
+        90
+      ],
+      "size": [
+        280,
+        46
+      ],
+      "flags": {},
+      "order": 73,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "samples",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 129
+        },
+        {
+          "localized_name": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "link": 127
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            130
+          ]
+        }
+      ],
+      "title": "C ← Hem Seam Mask",
+      "properties": {
+        "Node name for S&R": "SetLatentNoiseMask",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 81,
+      "type": "CLIPTextEncode",
+      "pos": [
+        4500,
+        160
+      ],
+      "size": [
+        360,
+        140
+      ],
+      "flags": {},
+      "order": 74,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 77
+        },
+        {
+          "localized_name": "文本",
+          "name": "text",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            131
+          ]
+        }
+      ],
+      "title": "C正向补充",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "clean hemline, natural skirt-to-leg overlap, soft edge transitions, consistent ambient lighting, natural contact shadow between skirt and legs"
+      ]
+    },
+    {
+      "id": 82,
+      "type": "ConditioningConcat",
+      "pos": [
+        4500,
+        320
+      ],
+      "size": [
+        280,
+        50
+      ],
+      "flags": {},
+      "order": 75,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "conditioning_to",
+          "name": "conditioning_to",
+          "type": "CONDITIONING",
+          "link": 87
+        },
+        {
+          "localized_name": "conditioning_from",
+          "name": "conditioning_from",
+          "type": "CONDITIONING",
+          "link": 131
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            132
+          ]
+        }
+      ],
+      "title": "C 主提示+补充",
+      "properties": {
+        "Node name for S&R": "ConditioningConcat",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 57,
+      "type": "KSampler",
+      "pos": [
+        4500,
+        390
+      ],
+      "size": [
+        310,
+        262
+      ],
+      "flags": {},
+      "order": 76,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 74
+        },
+        {
+          "localized_name": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 132
+        },
+        {
+          "localized_name": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 133
+        },
+        {
+          "localized_name": "Latent图像",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 130
+        },
+        {
+          "localized_name": "种子",
+          "name": "seed",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "seed"
+          }
+        },
+        {
+          "localized_name": "步数",
+          "name": "steps",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "steps"
+          }
+        },
+        {
+          "localized_name": "cfg",
+          "name": "cfg",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "cfg"
+          }
+        },
+        {
+          "localized_name": "采样器名称",
+          "name": "sampler_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "sampler_name"
+          }
+        },
+        {
+          "localized_name": "调度器",
+          "name": "scheduler",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "scheduler"
+          }
+        },
+        {
+          "localized_name": "降噪",
+          "name": "denoise",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "denoise"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            134
+          ]
+        }
+      ],
+      "title": "C 裙摆接缝 0.12",
+      "properties": {
+        "Node name for S&R": "KSampler",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        114514,
+        "fixed",
+        12,
+        4.5,
+        "euler_ancestral",
+        "normal",
+        0.12
+      ]
+    },
+    {
+      "id": 58,
+      "type": "VAEDecode",
+      "pos": [
+        4500,
+        680
+      ],
+      "size": [
+        220,
+        46
+      ],
+      "flags": {},
+      "order": 77,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "Latent",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 134
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 84
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            135
+          ]
+        }
+      ],
+      "title": "C 解码",
+      "properties": {
+        "Node name for S&R": "VAEDecode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 59,
+      "type": "ImageCompositeMasked",
+      "pos": [
+        4500,
+        750
+      ],
+      "size": [
+        300,
+        170
+      ],
+      "flags": {},
+      "order": 78,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "destination",
+          "name": "destination",
+          "type": "IMAGE",
+          "link": 122
+        },
+        {
+          "localized_name": "source",
+          "name": "source",
+          "type": "IMAGE",
+          "link": 135
+        },
+        {
+          "localized_name": "x",
+          "name": "x",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "x"
+          }
+        },
+        {
+          "localized_name": "y",
+          "name": "y",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "y"
+          }
+        },
+        {
+          "localized_name": "resize_source",
+          "name": "resize_source",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "resize_source"
+          }
+        },
+        {
+          "localized_name": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "link": 128
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            136
+          ]
+        }
+      ],
+      "title": "C后结果｜裙摆接缝已修",
+      "properties": {
+        "Node name for S&R": "ImageCompositeMasked",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        0,
+        0,
+        false
+      ]
+    },
+    {
+      "id": 60,
+      "type": "SaveImage",
+      "pos": [
+        4500,
+        950
+      ],
+      "size": [
+        320,
+        270
+      ],
+      "flags": {},
+      "order": 79,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图片",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 136
+        },
+        {
+          "localized_name": "文件名前缀",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "filename_prefix"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "v3最终成品",
+      "properties": {
+        "Node name for S&R": "SaveImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "01_WAI_cloth_lock_v3"
+      ]
+    },
+    {
+      "id": 83,
+      "type": "CLIPTextEncode",
+      "pos": [
+        2700,
+        780
+      ],
+      "size": [
+        360,
+        160
+      ],
+      "flags": {},
+      "order": 80,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 78
+        },
+        {
+          "localized_name": "文本",
+          "name": "text",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            137
+          ]
+        }
+      ],
+      "title": "v3负向补充",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "transparent cloth, sheer fabric, floating cloth, ghost fabric, double clothing layer, blurry hem"
+      ]
+    },
+    {
+      "id": 84,
+      "type": "ConditioningConcat",
+      "pos": [
+        2700,
+        970
+      ],
+      "size": [
+        280,
+        50
+      ],
+      "flags": {},
+      "order": 81,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "conditioning_to",
+          "name": "conditioning_to",
+          "type": "CONDITIONING",
+          "link": 88
+        },
+        {
+          "localized_name": "conditioning_from",
+          "name": "conditioning_from",
+          "type": "CONDITIONING",
+          "link": 137
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            101,
+            117,
+            133
+          ]
+        }
+      ],
+      "title": "v3 主负向+补充",
+      "properties": {
+        "Node name for S&R": "ConditioningConcat",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 70,
+      "type": "Note",
+      "pos": [
+        2700,
+        -280
+      ],
+      "size": [
+        900,
+        260
+      ],
+      "flags": {},
+      "order": 82,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "方案一 v3 用法",
+      "properties": {
+        "Node name for S&R": "Note",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "方案一 v3：三个定点修复，接在 v2 成品 Node 41 后面。\n顺序：A 清残影 → B 融腰线 → C 修裙摆边。\n\n每个分支自己画一张小 Mask（黑底亮白，不要开负面）：\nA 只涂左腰/左大腿白残影，不要涂整件裙子。\nB 只涂上衣下摆到裙腰那一圈。\nC 只涂裙摆下缘和裙-腿/裙-背景边。\n\n某个分支不涂（Mask 全黑）= 自动跳过。\nA: 16步 CFG4.8 denoise0.22   B/C: 12步 CFG4.5 denoise0.12\n看 01_WAI_v3_A / _B / cloth_lock_v3。"
+      ],
+      "color": "#432",
+      "bgcolor": "#000"
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      20,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      1,
+      0,
+      25,
+      0,
+      "MODEL"
+    ],
+    [
+      3,
+      1,
+      1,
+      2,
+      0,
+      "CLIP"
+    ],
+    [
+      4,
+      1,
+      1,
+      3,
+      0,
+      "CLIP"
+    ],
+    [
+      5,
+      1,
+      1,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      6,
+      1,
+      1,
+      7,
+      0,
+      "CLIP"
+    ],
+    [
+      7,
+      1,
+      2,
+      18,
+      1,
+      "VAE"
+    ],
+    [
+      8,
+      1,
+      2,
+      21,
+      1,
+      "VAE"
+    ],
+    [
+      9,
+      1,
+      2,
+      23,
+      1,
+      "VAE"
+    ],
+    [
+      10,
+      1,
+      2,
+      26,
+      1,
+      "VAE"
+    ],
+    [
+      11,
+      4,
+      0,
+      5,
+      0,
+      "IMAGE"
+    ],
+    [
+      12,
+      4,
+      1,
+      10,
+      0,
+      "MASK"
+    ],
+    [
+      13,
+      5,
+      0,
+      18,
+      0,
+      "IMAGE"
+    ],
+    [
+      14,
+      10,
+      0,
+      11,
+      0,
+      "IMAGE"
+    ],
+    [
+      15,
+      11,
+      0,
+      12,
+      0,
+      "IMAGE"
+    ],
+    [
+      16,
+      12,
+      0,
+      13,
+      0,
+      "MASK"
+    ],
+    [
+      17,
+      13,
+      0,
+      14,
+      0,
+      "MASK"
+    ],
+    [
+      18,
+      14,
+      0,
+      15,
+      0,
+      "IMAGE"
+    ],
+    [
+      19,
+      15,
+      0,
+      16,
+      0,
+      "IMAGE"
+    ],
+    [
+      20,
+      15,
+      0,
+      17,
+      0,
+      "IMAGE"
+    ],
+    [
+      21,
+      16,
+      0,
+      18,
+      2,
+      "MASK"
+    ],
+    [
+      22,
+      16,
+      0,
+      19,
+      1,
+      "MASK"
+    ],
+    [
+      25,
+      2,
+      0,
+      8,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      26,
+      6,
+      0,
+      8,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      27,
+      8,
+      0,
+      9,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      28,
+      7,
+      0,
+      9,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      29,
+      9,
+      0,
+      20,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      30,
+      3,
+      0,
+      20,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      31,
+      18,
+      0,
+      19,
+      0,
+      "LATENT"
+    ],
+    [
+      32,
+      19,
+      0,
+      20,
+      3,
+      "LATENT"
+    ],
+    [
+      33,
+      20,
+      0,
+      21,
+      0,
+      "LATENT"
+    ],
+    [
+      36,
+      23,
+      0,
+      24,
+      0,
+      "LATENT"
+    ],
+    [
+      37,
+      24,
+      0,
+      25,
+      3,
+      "LATENT"
+    ],
+    [
+      38,
+      9,
+      0,
+      25,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      39,
+      3,
+      0,
+      25,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      40,
+      25,
+      0,
+      26,
+      0,
+      "LATENT"
+    ],
+    [
+      50,
+      34,
+      0,
+      22,
+      0,
+      "IMAGE"
+    ],
+    [
+      51,
+      40,
+      0,
+      24,
+      1,
+      "MASK"
+    ],
+    [
+      52,
+      34,
+      0,
+      29,
+      0,
+      "IMAGE"
+    ],
+    [
+      53,
+      34,
+      0,
+      23,
+      0,
+      "IMAGE"
+    ],
+    [
+      54,
+      41,
+      0,
+      27,
+      0,
+      "IMAGE"
+    ],
+    [
+      55,
+      5,
+      0,
+      34,
+      0,
+      "IMAGE"
+    ],
+    [
+      56,
+      5,
+      0,
+      41,
+      0,
+      "IMAGE"
+    ],
+    [
+      57,
+      12,
+      0,
+      30,
+      0,
+      "MASK"
+    ],
+    [
+      58,
+      12,
+      0,
+      35,
+      0,
+      "MASK"
+    ],
+    [
+      59,
+      12,
+      0,
+      36,
+      0,
+      "MASK"
+    ],
+    [
+      60,
+      21,
+      0,
+      34,
+      1,
+      "IMAGE"
+    ],
+    [
+      61,
+      26,
+      0,
+      41,
+      1,
+      "IMAGE"
+    ],
+    [
+      62,
+      30,
+      0,
+      31,
+      0,
+      "MASK"
+    ],
+    [
+      63,
+      31,
+      0,
+      32,
+      0,
+      "IMAGE"
+    ],
+    [
+      64,
+      32,
+      0,
+      33,
+      0,
+      "IMAGE"
+    ],
+    [
+      65,
+      33,
+      0,
+      34,
+      5,
+      "MASK"
+    ],
+    [
+      66,
+      33,
+      0,
+      41,
+      5,
+      "MASK"
+    ],
+    [
+      67,
+      35,
+      0,
+      37,
+      0,
+      "MASK"
+    ],
+    [
+      68,
+      36,
+      0,
+      37,
+      1,
+      "MASK"
+    ],
+    [
+      69,
+      37,
+      0,
+      38,
+      0,
+      "MASK"
+    ],
+    [
+      70,
+      38,
+      0,
+      39,
+      0,
+      "IMAGE"
+    ],
+    [
+      71,
+      39,
+      0,
+      40,
+      0,
+      "IMAGE"
+    ],
+    [
+      72,
+      1,
+      0,
+      45,
+      0,
+      "MODEL"
+    ],
+    [
+      73,
+      1,
+      0,
+      51,
+      0,
+      "MODEL"
+    ],
+    [
+      74,
+      1,
+      0,
+      57,
+      0,
+      "MODEL"
+    ],
+    [
+      75,
+      1,
+      1,
+      77,
+      0,
+      "CLIP"
+    ],
+    [
+      76,
+      1,
+      1,
+      79,
+      0,
+      "CLIP"
+    ],
+    [
+      77,
+      1,
+      1,
+      81,
+      0,
+      "CLIP"
+    ],
+    [
+      78,
+      1,
+      1,
+      83,
+      0,
+      "CLIP"
+    ],
+    [
+      79,
+      1,
+      2,
+      43,
+      1,
+      "VAE"
+    ],
+    [
+      80,
+      1,
+      2,
+      46,
+      1,
+      "VAE"
+    ],
+    [
+      81,
+      1,
+      2,
+      49,
+      1,
+      "VAE"
+    ],
+    [
+      82,
+      1,
+      2,
+      52,
+      1,
+      "VAE"
+    ],
+    [
+      83,
+      1,
+      2,
+      55,
+      1,
+      "VAE"
+    ],
+    [
+      84,
+      1,
+      2,
+      58,
+      1,
+      "VAE"
+    ],
+    [
+      85,
+      9,
+      0,
+      78,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      86,
+      9,
+      0,
+      80,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      87,
+      9,
+      0,
+      82,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      88,
+      3,
+      0,
+      84,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      89,
+      41,
+      0,
+      43,
+      0,
+      "IMAGE"
+    ],
+    [
+      90,
+      41,
+      0,
+      47,
+      0,
+      "IMAGE"
+    ],
+    [
+      91,
+      42,
+      1,
+      61,
+      0,
+      "MASK"
+    ],
+    [
+      92,
+      61,
+      0,
+      62,
+      0,
+      "IMAGE"
+    ],
+    [
+      93,
+      62,
+      0,
+      63,
+      0,
+      "IMAGE"
+    ],
+    [
+      94,
+      63,
+      0,
+      64,
+      0,
+      "IMAGE"
+    ],
+    [
+      95,
+      64,
+      0,
+      44,
+      1,
+      "MASK"
+    ],
+    [
+      96,
+      64,
+      0,
+      47,
+      5,
+      "MASK"
+    ],
+    [
+      97,
+      43,
+      0,
+      44,
+      0,
+      "LATENT"
+    ],
+    [
+      98,
+      44,
+      0,
+      45,
+      3,
+      "LATENT"
+    ],
+    [
+      99,
+      77,
+      0,
+      78,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      100,
+      78,
+      0,
+      45,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      101,
+      84,
+      0,
+      45,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      102,
+      45,
+      0,
+      46,
+      0,
+      "LATENT"
+    ],
+    [
+      103,
+      46,
+      0,
+      47,
+      1,
+      "IMAGE"
+    ],
+    [
+      104,
+      47,
+      0,
+      85,
+      0,
+      "IMAGE"
+    ],
+    [
+      105,
+      47,
+      0,
+      49,
+      0,
+      "IMAGE"
+    ],
+    [
+      106,
+      47,
+      0,
+      53,
+      0,
+      "IMAGE"
+    ],
+    [
+      107,
+      48,
+      1,
+      65,
+      0,
+      "MASK"
+    ],
+    [
+      108,
+      65,
+      0,
+      66,
+      0,
+      "IMAGE"
+    ],
+    [
+      109,
+      66,
+      0,
+      67,
+      0,
+      "IMAGE"
+    ],
+    [
+      110,
+      67,
+      0,
+      68,
+      0,
+      "IMAGE"
+    ],
+    [
+      111,
+      68,
+      0,
+      50,
+      1,
+      "MASK"
+    ],
+    [
+      112,
+      68,
+      0,
+      53,
+      5,
+      "MASK"
+    ],
+    [
+      113,
+      49,
+      0,
+      50,
+      0,
+      "LATENT"
+    ],
+    [
+      114,
+      50,
+      0,
+      51,
+      3,
+      "LATENT"
+    ],
+    [
+      115,
+      79,
+      0,
+      80,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      116,
+      80,
+      0,
+      51,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      117,
+      84,
+      0,
+      51,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      118,
+      51,
+      0,
+      52,
+      0,
+      "LATENT"
+    ],
+    [
+      119,
+      52,
+      0,
+      53,
+      1,
+      "IMAGE"
+    ],
+    [
+      120,
+      53,
+      0,
+      86,
+      0,
+      "IMAGE"
+    ],
+    [
+      121,
+      53,
+      0,
+      55,
+      0,
+      "IMAGE"
+    ],
+    [
+      122,
+      53,
+      0,
+      59,
+      0,
+      "IMAGE"
+    ],
+    [
+      123,
+      54,
+      1,
+      69,
+      0,
+      "MASK"
+    ],
+    [
+      124,
+      69,
+      0,
+      87,
+      0,
+      "IMAGE"
+    ],
+    [
+      125,
+      87,
+      0,
+      88,
+      0,
+      "IMAGE"
+    ],
+    [
+      126,
+      88,
+      0,
+      89,
+      0,
+      "IMAGE"
+    ],
+    [
+      127,
+      89,
+      0,
+      56,
+      1,
+      "MASK"
+    ],
+    [
+      128,
+      89,
+      0,
+      59,
+      5,
+      "MASK"
+    ],
+    [
+      129,
+      55,
+      0,
+      56,
+      0,
+      "LATENT"
+    ],
+    [
+      130,
+      56,
+      0,
+      57,
+      3,
+      "LATENT"
+    ],
+    [
+      131,
+      81,
+      0,
+      82,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      132,
+      82,
+      0,
+      57,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      133,
+      84,
+      0,
+      57,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      134,
+      57,
+      0,
+      58,
+      0,
+      "LATENT"
+    ],
+    [
+      135,
+      58,
+      0,
+      59,
+      1,
+      "IMAGE"
+    ],
+    [
+      136,
+      59,
+      0,
+      60,
+      0,
+      "IMAGE"
+    ],
+    [
+      137,
+      83,
+      0,
+      84,
+      1,
+      "CONDITIONING"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "1 模型与底图",
+      "bounding": [
+        10,
+        -10,
+        430,
+        700
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "2 Prompt：人物固定，只改服装",
+      "bounding": [
+        450,
+        -10,
+        460,
+        940
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "3 Generation Mask：Grow 12 + Blur 8",
+      "bounding": [
+        920,
+        -10,
+        330,
+        1010
+      ],
+      "color": "#8A8",
+      "flags": {}
+    },
+    {
+      "id": 6,
+      "title": "3b Composite Mask：Grow 6 + Blur 12",
+      "bounding": [
+        920,
+        1020,
+        330,
+        380
+      ],
+      "color": "#6A8",
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "4 第一遍 Inpaint + Composite",
+      "bounding": [
+        1260,
+        -10,
+        680,
+        820
+      ],
+      "color": "#A88",
+      "flags": {}
+    },
+    {
+      "id": 5,
+      "title": "5 第二遍只修接缝 + 最终 Composite",
+      "bounding": [
+        1960,
+        -10,
+        720,
+        1240
+      ],
+      "color": "#88A",
+      "flags": {}
+    },
+    {
+      "id": 7,
+      "title": "5b Seam Mask：Outer+10 Inner-4 Blur 6",
+      "bounding": [
+        1960,
+        530,
+        340,
+        680
+      ],
+      "color": "#A8A",
+      "flags": {}
+    },
+    {
+      "id": 8,
+      "title": "6A 结构修复（只涂残影，空Mask=跳过）",
+      "bounding": [
+        2680,
+        -10,
+        700,
+        1230
+      ],
+      "color": "#A66",
+      "flags": {}
+    },
+    {
+      "id": 9,
+      "title": "6B 腰线融合（只涂腰圈）",
+      "bounding": [
+        3400,
+        -10,
+        700,
+        1230
+      ],
+      "color": "#AA6",
+      "flags": {}
+    },
+    {
+      "id": 10,
+      "title": "6C 裙摆接缝（只涂下缘）",
+      "bounding": [
+        4120,
+        -10,
+        740,
+        1250
+      ],
+      "color": "#6AA",
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.42,
+      "offset": [
+        -200,
+        400
+      ]
+    }
+  },
+  "version": 0.4
+}

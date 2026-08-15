@@ -1,0 +1,53 @@
+# 临时调试文件，不得作为长期存档
+temp/
+temp/**
+
+# 操作系统与编辑器
+Thumbs.db
+Desktop.ini
+.DS_Store
+ehthumbs.db
+$RECYCLE.BIN/
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.code-workspace
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.env
+.env.*
+
+# 日志与缓存（保留结构说明文件）
+*.log
+.cache/
+
+# 大体积生成结果默认不入库；需要归档时请手动挑选后提交
+results/**/*.png
+results/**/*.jpg
+results/**/*.jpeg
+results/**/*.webp
+results/**/*.gif
+results/**/*.mp4
+results/**/*.webm
+
+# 参考图可以入库，但忽略常见超大原片备份
+references/**/*.psd
+references/**/*.tif
+references/**/*.tiff
+references/**/*_raw.*
+
+# ComfyUI / 本地模型路径误拷
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.bin
+*.onnx
+*.gguf

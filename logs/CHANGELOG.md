@@ -2,6 +2,23 @@
 
 记录项目级重要变化，不是每一张出图。每次架构、基线、正式版或研究方向变化时追加。
 
+## v0.8 — 2026-08-16
+
+AutoClothes Phase 3A：分层 Mask + 人体保护 + 手工覆盖。
+
+目的：
+把“删旧衣”和“保护人物”拆开。Final Edit = (衣服 + Manual Add) − (硬保护 + 皮肤核 + Manual Protect)。
+
+结果：
+- 新增 `workflows/experiments/WAI_AutoClothes_Inpaint_v1-phase3.json`
+- 未覆盖 Phase 2
+- 对应 `experiments/2026-08-16/EXP-007.md`
+- 采样 / Prompt / Crop / Color Match=0 未改
+- 图已建成，尚未 Queue
+
+下一步：
+先看 ④ FINAL EDIT MASK，再和 Phase 2 对照腰身与衣缘。
+
 ## v0.7 — 2026-08-15
 
 AutoClothes Phase 2：Segformer 自动认衣。

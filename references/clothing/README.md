@@ -7,6 +7,8 @@
 ```text
 gu_clothes_mask_hand_v1.png — 顾的手绘服装 Mask，白=重绘，1072×1856
 gu_clothes_mask_800_upscaled.png — 旧 800×1216 Mask 放大，仅对照，不进主线
+manual_add_mask.png — Phase 3 手工补删，默认全黑
+manual_protect_mask.png — Phase 3 手工保护，默认全黑
 ```
 
 这是 **原衣服区域 Mask**，不是目标服装参考图。自动认衣接入后，这类手绘 Mask 只作对照。

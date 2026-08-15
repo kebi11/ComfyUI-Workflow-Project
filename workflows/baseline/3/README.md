@@ -13,16 +13,19 @@
 | 阶段 | 内容 | 状态 |
 |---|---|---|
 | Phase 1 | 手工 Mask + Crop + Fooocus + Stitch | 实验图已建，待 Queue |
-| Phase 2 | Segformer 自动衣服 Mask | 实验图已建，待重启 Queue |
-| Phase 3+ | 保护区 / SAM2 / VITMatte | 未开始 |
+| Phase 2 | Segformer 自动衣服 Mask | 实验图已建 |
+| Phase 3A | 分层 Mask + 人体保护 + 手工覆盖 | 实验图已建，待 Queue |
+| Phase 3B+ | Generation/Composite 双 Mask、SAM2 | 未开始 |
 
 可运行文件在实验区，不写进本目录 JSON：
 
 ```text
 workflows/experiments/WAI_AutoClothes_Inpaint_v1-phase1.json
 workflows/experiments/WAI_AutoClothes_Inpaint_v1-phase2.json
+workflows/experiments/WAI_AutoClothes_Inpaint_v1-phase3.json
 experiments/2026-08-15/EXP-004.md
 experiments/2026-08-15/EXP-005.md
+experiments/2026-08-16/EXP-007.md
 ```
 
-当前请加载 Phase 2。先看自动 Mask 预览，不要先开 SAM2 / Human Parser。
+当前请加载 Phase 3。先看 ④ FINAL EDIT MASK，不要先开 SAM2 / 不要改 Denoise。

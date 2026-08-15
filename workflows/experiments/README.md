@@ -41,4 +41,8 @@ WAI_AutoClothes_Inpaint_v1-phase1.json
 WAI_AutoClothes_Inpaint_v1-phase2.json
 说明： Segformer 自动认衣替换手工 Mask
 对应： experiments/2026-08-15/EXP-005.md
+
+WAI_AutoClothes_Inpaint_v1-phase3.json
+说明： 分层 Mask + 人体保护 + 手工覆盖
+对应： experiments/2026-08-16/EXP-007.md
 ```

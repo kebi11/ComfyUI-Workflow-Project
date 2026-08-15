@@ -194,13 +194,13 @@
           ]
         }
       ],
-      "title": "正向-去衣【每次只改这里】",
+      "title": "正向-新服装【每次只改这里】",
       "properties": {
         "Node name for S&R": "CLIPTextEncode",
         "cnr_id": "comfy-core"
       },
       "widgets_values": [
-        "masterpiece, best quality, amazing quality,\nnsfw, uncensored, nude,\npale skin, same skin tone, consistent skin tone,\nsame body type, tall slender woman, slim waist, long legs, narrow shoulders, delicate proportions,\nnatural anatomy, clean bare skin,\nsoft sunlight, consistent lighting"
+        "masterpiece, best quality, amazing quality,\nwhite sleeveless blouse,\nhigh-waisted opaque black pleated skirt,\nclean garment silhouette, natural clothing folds,\nnatural clothing-body contact, soft contact shadows, consistent lighting"
       ],
       "color": "#232",
       "bgcolor": "#353"
@@ -252,7 +252,7 @@
         "cnr_id": "comfy-core"
       },
       "widgets_values": [
-        "bad quality, worst quality, worst detail,\nclothes, dress, fabric, sheer cloth, transparent cloth,\ndouble clothing, ghost fabric, floating cloth,\ntan skin, dark skin, sunburn, uneven skin tone,\nwide waist, thick thighs, extra limbs, bad anatomy,\nchild, loli"
+        "bad quality, worst quality, worst detail,\ndouble clothing, ghost fabric, floating fabric, blurry hemline"
       ]
     },
     {
@@ -652,7 +652,7 @@
           ]
         }
       ],
-      "title": "KSampler 去衣 0.95",
+      "title": "KSampler 换装 0.95",
       "properties": {
         "Node name for S&R": "KSampler",
         "cnr_id": "comfy-core"

@@ -7,5 +7,5 @@
 | EXP-001 | 2026-08-15 | 方案一 v2 防分层重构 | `01_WAI_人物锁定换装-v02.json` | 三套 Mask + Composite | 图已建成，未实测 | `experiments/2026-08-15/EXP-001.md` |
 | EXP-002 | 2026-08-15 | 方案一 v3 三点修复 | `01_WAI_人物锁定换装-v03.json` | A残影 / B腰线 / C裙边 | 图已建成，未实测 | `experiments/2026-08-15/EXP-002.md` |
 | EXP-003 | 2026-08-15 | Universal Inpaint v1 | `WAI_Universal_Inpaint_v1.json` | Crop+Fooocus 单次 | 图已建成，待 patch 下完 | `experiments/2026-08-15/EXP-003.md` |
-| EXP-004 | 2026-08-15 | AutoClothes Phase 1 去衣 | `WAI_AutoClothes_Inpaint_v1-phase1.json` | 手工 Mask + 去衣 Prompt | 图已建成，待 Queue | `experiments/2026-08-15/EXP-004.md` |
+| EXP-004 | 2026-08-15 | AutoClothes Phase 1 换装 | `WAI_AutoClothes_Inpaint_v1-phase1.json` | 手工 Mask + 换装 Prompt | 图已建成，待 Queue | `experiments/2026-08-15/EXP-004.md` |
 | EXP-005 | 2026-08-15 | AutoClothes Phase 2 自动认衣 | `WAI_AutoClothes_Inpaint_v1-phase2.json` | Segformer 替换手工 Mask | 图已建成，待重启 Queue | `experiments/2026-08-15/EXP-005.md` |

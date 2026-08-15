@@ -15,7 +15,7 @@ AutoClothes Phase 2：Segformer 自动认衣。
 - 下载 `segformer_b2_clothes` 到 `models/segformer_b2_clothes`
 - 新增 `workflows/experiments/WAI_AutoClothes_Inpaint_v1-phase2.json`
 - 对应 `experiments/2026-08-15/EXP-005.md`
-- 采样与 Phase 1 去衣 Prompt 未改
+- 采样与 Phase 1 换装 Prompt 未改
 - 需重启 ComfyUI 后 Queue，尚未出图
 
 下一步：
@@ -23,10 +23,10 @@ AutoClothes Phase 2：Segformer 自动认衣。
 
 ## v0.6 — 2026-08-15
 
-AutoClothes Phase 1：在 Universal Inpaint 上派生去衣实验，不覆盖 baseline。
+AutoClothes Phase 1：在 Universal Inpaint 上派生换装实验，不覆盖 baseline。
 
 目的：
-先验证「服装 Mask + Crop + Fooocus」能在锁脸、锁已露出皮肤和身材的前提下去掉薄纱裙。自动认衣留到 Phase 2。
+先验证「服装 Mask + Crop + Fooocus」能在锁脸、锁已露出皮肤和身材的前提下更换薄纱裙。自动认衣留到 Phase 2。
 
 结果：
 - 补齐 `input/顾.jpg` 别名；正式用 `gu_ref.jpg`

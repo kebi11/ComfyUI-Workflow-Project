@@ -20,12 +20,12 @@
       "mode": 0,
       "inputs": [],
       "outputs": [],
-      "title": "AutoClothes Phase 1｜手工 Mask 去衣",
+      "title": "AutoClothes Phase 1｜手工 Mask 换装",
       "properties": {
         "Node name for S&R": "Note"
       },
       "widgets_values": [
-        "AutoClothes Phase 1：验证 Crop + Fooocus + Stitch。还没有自动认衣。\n目标：只重绘衣服，变成成人向裸身，锁脸/帽/发型/已露出的身材和肤色。\n\n1. 底图用 gu_ref.jpg。服装 Mask 默认 gu_clothes_mask_hand_v1.png（白=重绘）。\n   不要涂脸、帽子、头发、手、雪糕、已露出的手臂腿、背景。\n   透明纱、系结、裙摆必须盖住，否则会留残影。\n2. 只改绿色「正向-去衣」。不要靠 same face 锁人，靠 Mask + Crop。\n3. Denoise 默认 0.95。还有旧纱先加大 Mask，再试 1.00。不要加第二遍。\n4. Color Match 默认关。Crop CPU；OOM 把 1024 改成 896。\n5. 本机跑通后再装 LayerStyle，用 Segformer 替换这张手工 Mask。"
+        "AutoClothes Phase 1：验证 Crop + Fooocus + Stitch。还没有自动认衣。\n目标：只重绘衣服，锁脸/帽/发型/已露出的身材和肤色。\n\n1. 底图用 gu_ref.jpg。服装 Mask 默认 gu_clothes_mask_hand_v1.png（白=重绘）。\n   不要涂脸、帽子、头发、手、雪糕、已露出的手臂腿、背景。\n   透明纱、系结、裙摆必须盖住，否则会留残影。\n2. 只改绿色「正向-新服装」。不要靠 same face 锁人，靠 Mask + Crop。\n3. Denoise 默认 0.95。还有旧纱先加大 Mask，再试 1.00。不要加第二遍。\n4. Color Match 默认关。Crop CPU；OOM 把 1024 改成 896。\n5. 本机跑通后再装 LayerStyle，用 Segformer 替换这张手工 Mask。"
       ],
       "color": "#432",
       "bgcolor": "#000"
@@ -193,13 +193,13 @@
           ]
         }
       ],
-      "title": "正向-去衣【每次只改这里】",
+      "title": "正向-新服装【每次只改这里】",
       "properties": {
         "Node name for S&R": "CLIPTextEncode",
         "cnr_id": "comfy-core"
       },
       "widgets_values": [
-        "masterpiece, best quality, amazing quality,\nnsfw, uncensored, nude,\npale skin, same skin tone, consistent skin tone,\nsame body type, tall slender woman, slim waist, long legs, narrow shoulders, delicate proportions,\nnatural anatomy, clean bare skin,\nsoft sunlight, consistent lighting"
+        "masterpiece, best quality, amazing quality,\nwhite sleeveless blouse,\nhigh-waisted opaque black pleated skirt,\nclean garment silhouette, natural clothing folds,\nnatural clothing-body contact, soft contact shadows, consistent lighting"
       ],
       "color": "#232",
       "bgcolor": "#353"
@@ -251,7 +251,7 @@
         "cnr_id": "comfy-core"
       },
       "widgets_values": [
-        "bad quality, worst quality, worst detail,\nclothes, dress, fabric, sheer cloth, transparent cloth,\ndouble clothing, ghost fabric, floating cloth,\ntan skin, dark skin, sunburn, uneven skin tone,\nwide waist, thick thighs, extra limbs, bad anatomy,\nchild, loli"
+        "bad quality, worst quality, worst detail,\ndouble clothing, ghost fabric, floating fabric, blurry hemline"
       ]
     },
     {
@@ -651,7 +651,7 @@
           ]
         }
       ],
-      "title": "KSampler 去衣 0.95",
+      "title": "KSampler 换装 0.95",
       "properties": {
         "Node name for S&R": "KSampler",
         "cnr_id": "comfy-core"
@@ -863,7 +863,7 @@
         "cnr_id": "comfy-core"
       },
       "widgets_values": [
-        "WAI_autoclothes_p1_undress"
+        "WAI_autoclothes_p1"
       ]
     },
     {

@@ -35,7 +35,7 @@ WAI_Universal_Inpaint_v1.json
 对应： experiments/2026-08-15/EXP-003.md
 
 WAI_AutoClothes_Inpaint_v1-phase1.json
-说明： 上述主干 + 独立服装 Mask + 去衣 Prompt
+说明： 上述主干 + 独立服装 Mask + 换装 Prompt
 对应： experiments/2026-08-15/EXP-004.md
 
 WAI_AutoClothes_Inpaint_v1-phase2.json

@@ -45,4 +45,8 @@ WAI_AutoClothes_Inpaint_v1-phase2.json
 WAI_AutoClothes_Inpaint_v1-phase3.json
 说明： 分层 Mask + 人体保护 + 手工覆盖
 对应： experiments/2026-08-16/EXP-007.md
+
+WAI_AutoClothes_Inpaint_v1-exp009.json
+说明： Phase 3 + Small Context（optional_context_mask，Nearby 24px）
+对应： experiments/2026-08-17/EXP-009.md
 ```

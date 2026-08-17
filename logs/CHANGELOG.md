@@ -2,6 +2,23 @@
 
 记录项目级重要变化，不是每一张出图。每次架构、基线、正式版或研究方向变化时追加。
 
+## v0.9 — 2026-08-17
+
+AutoClothes 进入视觉融合阶段，但第一张实验图只做 Small Context。
+
+目的：
+解决 P13（新区域像另一图层）。P08 ⊂ P13。Context 只扩大 Crop，不是肤色/风格编码器。
+
+结果：
+- 新增设计文档与补丁（开工 Gate、Contract 8/9、EXP-009 验收）
+- 从 Phase 3 派生 `workflows/experiments/WAI_AutoClothes_Inpaint_v1-exp009.json`
+- 未覆盖 Phase 3；未加入 Pre-fill / 降 Denoise / Harmonization
+- P13 写入 `docs/已知问题.md`
+- JSON 连线校验 0 错误，尚未 Queue
+
+下一步：
+同一输入对照 Phase 3 后 Queue EXP-009。先看 CONTEXT MASK 与 FINAL CROP，再评融合。通过后才做 EXP-010。
+
 ## v0.8 — 2026-08-16
 
 AutoClothes Phase 3A：分层 Mask + 人体保护 + 手工覆盖。

@@ -11,12 +11,12 @@ EXP-010 Pre-fill Only。
 
 结果：
 - 从 EXP-009 派生 `WAI_AutoClothes_Inpaint_v1-exp010.json`
-- JSON 写入 `胡.jpg` 与 EXP-007/009 真实 runtime Prompt
-- Denoise 仍 0.95；无 Harmonization
-- 未 Queue
+- 已 Queue：`results/baseline/WAI_autoclothes_exp010_00001_.png`
+- 旧衣条带未减；泳圈出现粉红渗色
+- Denoise 仍 0.95，未进入 EXP-011
 
 下一步：
-先看 ④ PRE-FILL RESULT，再和 `exp009_00002` 比旧衣轮廓。
+先核对 Final Edit / Pre-fill 预览和 Manual Add。不要降 Denoise。
 
 ## v0.9 — 2026-08-17
 

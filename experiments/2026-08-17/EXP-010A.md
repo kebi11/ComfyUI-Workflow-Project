@@ -36,10 +36,13 @@ Telea/falloff=0、Context 24、Color Match 0、
 胡.jpg、Seed 114514、runtime Prompt
 
 测试结果：
-JSON 连线校验 0 错误。本条尚未 Queue。
+JSON 连线校验 0 错误。
+2026-08-18 回查：Comfy Shared output 与 results/baseline 均无 `WAI_autoclothes_exp010a_*.png`。
+最新成品仍是 `WAI_autoclothes_exp010_00001_.png`（22:19）。
+因此「生成图没改善」目前不能记成 EXP-010A 失败，只说明 EXP-010 成品本来就没改善。
 
 结果路径：
-results/experiments/EXP-010A/（待放入）
+尚无 010A 成品。最新对照仍是 results/baseline/WAI_autoclothes_exp010_00001_.png
 
 优点：
 髋侧漏检和手臂勒痕被保护掉，这两个假设可以分开验证

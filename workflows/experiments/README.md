@@ -49,4 +49,8 @@ WAI_AutoClothes_Inpaint_v1-phase3.json
 WAI_AutoClothes_Inpaint_v1-exp009.json
 说明： Phase 3 + Small Context（optional_context_mask，Nearby 24px）
 对应： experiments/2026-08-17/EXP-009.md
+
+WAI_AutoClothes_Inpaint_v1-exp010.json
+说明： EXP-009 + Telea Pre-fill，Denoise 仍 0.95
+对应： experiments/2026-08-17/EXP-010.md
 ```

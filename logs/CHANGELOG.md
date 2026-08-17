@@ -2,6 +2,22 @@
 
 记录项目级重要变化，不是每一张出图。每次架构、基线、正式版或研究方向变化时追加。
 
+## v0.10 — 2026-08-17
+
+EXP-010 Pre-fill Only。
+
+目的：
+在不降 Denoise 的前提下先削弱旧衣结构。本机无 LaMa 权重，使用已有 Acly `INPAINT_MaskedFill` / Telea。
+
+结果：
+- 从 EXP-009 派生 `WAI_AutoClothes_Inpaint_v1-exp010.json`
+- JSON 写入 `胡.jpg` 与 EXP-007/009 真实 runtime Prompt
+- Denoise 仍 0.95；无 Harmonization
+- 未 Queue
+
+下一步：
+先看 ④ PRE-FILL RESULT，再和 `exp009_00002` 比旧衣轮廓。
+
 ## v0.9 — 2026-08-17
 
 AutoClothes 进入视觉融合阶段，但第一张实验图只做 Small Context。
@@ -12,12 +28,12 @@ AutoClothes 进入视觉融合阶段，但第一张实验图只做 Small Context
 结果：
 - 新增设计文档与补丁（开工 Gate、Contract 8/9、EXP-009 验收）
 - 从 Phase 3 派生 `workflows/experiments/WAI_AutoClothes_Inpaint_v1-exp009.json`
-- 未覆盖 Phase 3；未加入 Pre-fill / 降 Denoise / Harmonization
-- P13 写入 `docs/已知问题.md`
-- JSON 连线校验 0 错误，尚未 Queue
+- EXP-007 / EXP-009 已 Queue 并回写。对照图：`p3_00004` vs `exp009_00002`
+- 真实 runtime：`胡.jpg` + Seed 114514 + 去衣 Prompt（见 `experiments/2026-08-17/runtime-prompt-exp007-exp009.md`）
+- EXP-009 对 P13 无明显改善。Context 不再扩大
 
 下一步：
-同一输入对照 Phase 3 后 Queue EXP-009。先看 CONTEXT MASK 与 FINAL CROP，再评融合。通过后才做 EXP-010。
+EXP-010 Pre-fill Only。Prompt / Denoise / Harmonization 冻结。
 
 ## v0.8 — 2026-08-16
 

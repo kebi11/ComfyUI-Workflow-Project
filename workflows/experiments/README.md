@@ -53,4 +53,8 @@ WAI_AutoClothes_Inpaint_v1-exp009.json
 WAI_AutoClothes_Inpaint_v1-exp010.json
 说明： EXP-009 + Telea Pre-fill，Denoise 仍 0.95
 对应： experiments/2026-08-17/EXP-010.md
+
+WAI_AutoClothes_Inpaint_v1-exp010a.json
+说明： pants ON + Manual Add 可覆盖 Soft Protect
+对应： experiments/2026-08-17/EXP-010A.md
 ```

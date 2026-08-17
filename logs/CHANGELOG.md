@@ -2,6 +2,23 @@
 
 记录项目级重要变化，不是每一张出图。每次架构、基线、正式版或研究方向变化时追加。
 
+## v0.11 — 2026-08-17
+
+EXP-010A：Mask 审计，不进 EXP-011。
+
+目的：
+EXP-010 不能用成品否定 Telea。当前阻断是 Garment 类别和 Manual Add 优先级。
+
+结果：
+- 派生 `WAI_AutoClothes_Inpaint_v1-exp010a.json`
+- pants=ON
+- Final Edit = (Garment − Auto Protect) + Manual Add − Hard Protect − Manual Protect
+- Telea / Denoise / Prompt 冻结
+- 未 Queue
+
+下一步：
+Queue 后先填四格诊断，Case 4 才做 EXP-011。
+
 ## v0.10 — 2026-08-17
 
 EXP-010 Pre-fill Only。

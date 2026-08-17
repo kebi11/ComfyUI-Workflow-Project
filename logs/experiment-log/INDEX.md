@@ -11,4 +11,5 @@
 | EXP-005 | 2026-08-15 | AutoClothes Phase 2 自动认衣 | `WAI_AutoClothes_Inpaint_v1-phase2.json` | Segformer 替换手工 Mask | 图已建成，待重启 Queue | `experiments/2026-08-15/EXP-005.md` |
 | EXP-007 | 2026-08-16 | AutoClothes Phase 3A 分层 Mask | `WAI_AutoClothes_Inpaint_v1-phase3.json` | REMOVE − PROTECT | 已 Queue：保护有效，P13/P06 仍在 | `experiments/2026-08-16/EXP-007.md` |
 | EXP-009 | 2026-08-17 | AutoClothes Small Context | `WAI_AutoClothes_Inpaint_v1-exp009.json` | optional_context_mask + Near BG 24px | 已对照 Phase 3，P13 无明显改善 | `experiments/2026-08-17/EXP-009.md` |
-| EXP-010 | 2026-08-17 | AutoClothes Pre-fill Only | `WAI_AutoClothes_Inpaint_v1-exp010.json` | Telea MaskedFill，Denoise 仍 0.95 | 已对照 009：残影未减，泳圈渗色 | `experiments/2026-08-17/EXP-010.md` |
+| EXP-010 | 2026-08-17 | AutoClothes Pre-fill Only | `WAI_AutoClothes_Inpaint_v1-exp010.json` | Telea MaskedFill，Denoise 仍 0.95 | 成品残影未减；不能据此判 Telea 无效 | `experiments/2026-08-17/EXP-010.md` |
+| EXP-010A | 2026-08-17 | P06 Mask Audit / Override Fix | `WAI_AutoClothes_Inpaint_v1-exp010a.json` | pants ON + Manual Add 覆盖 Soft Protect | 图已建成，待 Queue | `experiments/2026-08-17/EXP-010A.md` |

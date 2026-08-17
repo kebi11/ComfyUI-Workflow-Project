@@ -5,7 +5,7 @@
 实验记录：`experiments/2026-08-16/EXP-007.md`  
 派生自：`WAI_AutoClothes_Inpaint_v1-phase2.json`
 
-状态：**图已建成，未覆盖 Phase 2。** 需重启 ComfyUI 后加载。尚未 Queue。
+状态：**已 Queue。** 未覆盖 Phase 2。正式对照：`results/baseline/WAI_autoclothes_p3_00004_.png`（输入 `胡.jpg`，Seed 114514）。
 
 ## 这一版解决什么
 
